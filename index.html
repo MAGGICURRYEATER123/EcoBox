@@ -1,105 +1,319 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>EcoBox Project - Smart Climate Tech</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-  <style>
-    body {
-      background: #000;
-      color: white;
-      font-family: 'Segoe UI', sans-serif;
-      scroll-behavior: smooth;
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>EcoBox Project - Environmental Advantages</title>
+<style>
+  /* Reset & base */
+  body {
+    margin: 0; padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #0a0a0a, #3a3a3a);
+    color: #eee;
+    overflow-x: hidden;
+  }
+  h1, h2, h3, p {
+    margin: 0;
+  }
+
+  /* HEADER SECTION */
+  #header-section {
+    max-width: 960px;
+    margin: 4rem auto 2rem;
+    padding: 0 2.5rem;
+    text-align: center;
+    user-select: none;
+  }
+
+  #eco-title {
+    font-size: 4.5rem;
+    font-weight: 300; /* thin */
+    letter-spacing: 0.1em;
+    margin-bottom: 0.5rem;
+    color: #ffffff;
+    user-select: none;
+    font-style: normal;
+  }
+
+  #eco-subtitle {
+    font-size: 1.3rem;
+    font-weight: 300; /* thin and sleek */
+    color: #bbbbbb;
+    letter-spacing: 0.12em;
+    font-style: italic; /* sleek style */
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  /* ENVIRONMENTAL SLIDER SECTION */
+  #env-section {
+    max-width: 960px;
+    margin: 3rem auto 4rem;
+    padding: 2rem 2.5rem 3rem;
+    background: linear-gradient(90deg, #121212, #222);
+    border-radius: 10px;
+    box-shadow: 0 0 15px #111;
+    user-select: none;
+  }
+
+  #main-title {
+    text-align: center;
+    font-size: 3rem;
+    font-weight: 900;
+    color: #fff;
+    margin-bottom: 2rem;
+  }
+
+  #slider-container {
+    display: flex;
+    position: relative;
+    align-items: center;
+  }
+
+  .arrow-btn {
+    background: transparent;
+    border: none;
+    font-size: 2.5rem;
+    font-weight: 900;
+    color: #eee;
+    cursor: pointer;
+    padding: 0 12px;
+    transition: color 0.2s ease;
+    user-select: none;
+    line-height: 1;
+  }
+  .arrow-btn:hover {
+    color: #a0f7a1;
+  }
+
+  #slide-content {
+    flex: 1 1 auto;
+    display: flex;
+    gap: 2rem;
+    overflow: hidden;
+    align-items: center;
+    min-height: 260px;
+  }
+
+  .text-slide {
+    min-width: 400px;
+    max-width: 450px;
+    flex-shrink: 0;
+    opacity: 1;
+    transition: opacity 0.3s ease;
+  }
+  .secondary-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #a0f7a1;
+    margin-bottom: 0.8rem;
+  }
+  .desc-text {
+    font-size: 1.1rem;
+    line-height: 1.5;
+    color: #ccc;
+    font-weight: 500;
+  }
+  .text-slide h2 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    font-weight: 800;
+    color: #fff;
+  }
+
+  .image-slide {
+    min-width: 320px;
+    flex-shrink: 0;
+    opacity: 1;
+    transition: opacity 0.3s ease;
+
+    /* Neon glowing border box */
+    border: 2px solid #a0f7a1;
+    border-radius: 14px;
+    box-shadow:
+      0 0 8px #a0f7a1aa,
+      0 0 20px #a0f7a1cc,
+      inset 0 0 10px #a0f7a1aa;
+    background: #121212;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 260px; /* fixed height so it looks neat */
+  }
+
+  /* Responsive */
+  @media (max-width: 800px) {
+    #header-section {
+      margin: 2rem auto 1.5rem;
+      padding: 0 1.5rem;
     }
-    .glow {
-      text-shadow: 0 0 10px #22c55e, 0 0 20px #22c55e;
+    #eco-title {
+      font-size: 3rem;
+      letter-spacing: 0.08em;
     }
-    .card {
-      background: #111;
-      border: 1px solid #22c55e;
-      border-radius: 1rem;
-      box-shadow: 0 0 20px rgba(34, 197, 94, 0.3);
-      transition: 0.3s ease;
+    #eco-subtitle {
+      font-size: 1rem;
+      letter-spacing: 0.1em;
     }
-    .card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 0 35px rgba(34, 197, 94, 0.6);
+
+    #env-section {
+      max-width: 95vw;
+      padding: 1.5rem 1rem 2rem;
     }
-  </style>
+    #main-title {
+      font-size: 2.2rem;
+      margin-bottom: 1.5rem;
+    }
+    #slider-container {
+      flex-direction: column;
+      align-items: center;
+    }
+    .arrow-btn {
+      font-size: 2rem;
+      padding: 0 8px;
+      margin: 1rem 0;
+    }
+    #slide-content {
+      width: 100%;
+      overflow: visible;
+      justify-content: center;
+      min-height: auto;
+    }
+    .text-slide {
+      max-width: 90vw;
+      min-width: auto;
+      text-align: center;
+      opacity: 1 !important;
+      transition: none !important;
+    }
+    .image-slide {
+      min-width: 90vw;
+      height: 200px;
+      margin: 1rem 0 0;
+    }
+  }
+</style>
 </head>
 <body>
-  <!-- Hero Section -->
-  <section class="h-screen flex flex-col justify-center items-center text-center px-4 bg-black">
-    <h1 class="text-5xl md:text-7xl font-bold text-green-500 glow">EcoBox Project</h1>
-    <p class="mt-6 text-lg md:text-xl text-gray-300 max-w-2xl">
-      Revolutionizing Smart Climate Control with <span class="text-green-400 font-semibold">Arduino</span> & <span class="text-green-400 font-semibold">ESP32</span>
-    </p>
-    <p class="text-gray-500 text-sm mt-2">Smarter. Greener. Smaller.</p>
-  </section>
 
-  <!-- Key Specs Section -->
-  <section class="py-20 px-6 bg-gray-900">
-    <h2 class="text-3xl md:text-5xl font-semibold text-center text-green-400 mb-16">Core Technologies</h2>
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-      <div class="card p-6 text-center">
-        <h3 class="text-2xl text-green-400 mb-2">Arduino Uno</h3>
-        <p class="text-gray-400">The reliable brain for core control — powering your relay and sensors.</p>
+<!-- HEADER -->
+<section id="header-section" aria-label="EcoBox Introduction">
+  <h1 id="eco-title">EcoBox</h1>
+  <p id="eco-subtitle">Innovative, sustainable climate control powered by cutting-edge design and technology.</p>
+</section>
+
+<!-- ENVIRONMENTAL ADVANTAGES SLIDER -->
+<section id="env-section" aria-label="EcoBox Environmental Advantages">
+  <h1 id="main-title">EcoBox: Environmental Advantages</h1>
+
+  <div id="slider-container">
+    <button class="arrow-btn" id="prev-btn" aria-label="Previous advantage">&lt;</button>
+
+    <div id="slide-content">
+      <div class="text-slide" id="text-slide">
+        <h3 class="secondary-title" id="secondary-title"></h3>
+        <h2 id="main-title-slide"></h2>
+        <p class="desc-text" id="desc-text"></p>
       </div>
-      <div class="card p-6 text-center">
-        <h3 class="text-2xl text-green-400 mb-2">ESP32</h3>
-        <p class="text-gray-400">Handles WiFi + Bluetooth + logic, streaming data via Blynk dashboard.</p>
-      </div>
-      <div class="card p-6 text-center">
-        <h3 class="text-2xl text-green-400 mb-2">DHT11 Sensor</h3>
-        <p class="text-gray-400">Monitors temperature and humidity with precision for indoor control.</p>
-      </div>
-      <div class="card p-6 text-center">
-        <h3 class="text-2xl text-green-400 mb-2">YL-69 Soil Sensor</h3>
-        <p class="text-gray-400">Detects moisture level in soil for intelligent water spray decisions.</p>
-      </div>
-      <div class="card p-6 text-center">
-        <h3 class="text-2xl text-green-400 mb-2">Relay Module</h3>
-        <p class="text-gray-400">Turns pump and fan on/off safely via commands from the controller.</p>
-      </div>
-      <div class="card p-6 text-center">
-        <h3 class="text-2xl text-green-400 mb-2">DC Fan & Pump</h3>
-        <p class="text-gray-400">Automated air cooling and water control based on real-time data.</p>
+      <div class="image-slide" id="image-slide">
+        <!-- Neon box placeholder for image -->
+        <span style="color: #a0f7a1; font-style: italic;">Image placeholder</span>
       </div>
     </div>
-  </section>
 
-  <!-- Footer -->
-  <footer class="text-center py-10 bg-black text-gray-600 text-sm">
-    &copy; 2025 EcoBox Project. Designed with care — and precision. 
-  </footer>
+    <button class="arrow-btn" id="next-btn" aria-label="Next advantage">&gt;</button>
+  </div>
+</section>
 
-  <!-- GSAP Scroll Animations -->
-  <script>
-    gsap.registerPlugin(ScrollTrigger);
+<script>
+  const advantages = [
+    {
+      secondaryTitle: "Ultra-Efficient Power",
+      title: "Powerful ESP32",
+      desc: "The ESP32’s ultra-efficient dual-core processor delivers blazing performance while reducing power consumption — perfect for 24/7 smart climate control."
+    },
+    {
+      secondaryTitle: "Intelligent Hydration",
+      title: "Smart Water Saving",
+      desc: "EcoBox’s soil moisture sensor activates irrigation only when necessary, preventing waste and promoting sustainable water use."
+    },
+    {
+      secondaryTitle: "Precision Comfort",
+      title: "Optimal Climate Control",
+      desc: "Precision temperature and humidity sensing lets EcoBox maintain ideal conditions, improving plant health and comfort."
+    },
+    {
+      secondaryTitle: "Set & Forget",
+      title: "Fully Autonomous",
+      desc: "Set it once and EcoBox runs automatically, adjusting in real-time without needing manual input."
+    },
+    {
+      secondaryTitle: "Green Tech",
+      title: "Low Carbon Impact",
+      desc: "EcoBox’s optimized hardware and software reduce electricity demand, helping lower your environmental footprint."
+    }
+  ];
 
-    gsap.utils.toArray(".card").forEach((card, i) => {
-      gsap.from(card, {
-        scrollTrigger: {
-          trigger: card,
-          start: "top 90%",
-        },
-        opacity: 0,
-        y: 50,
-        duration: 0.8,
-        ease: "power2.out",
-        delay: i * 0.1
-      });
+  const secondaryTitleEl = document.getElementById("secondary-title");
+  const mainTitleEl = document.getElementById("main-title-slide");
+  const descEl = document.getElementById("desc-text");
+  const textSlideEl = document.getElementById("text-slide");
+  const imageSlideEl = document.getElementById("image-slide");
+
+  const prevBtn = document.getElementById("prev-btn");
+  const nextBtn = document.getElementById("next-btn");
+
+  let currentIndex = 0;
+  let isAnimating = false;
+
+  function fadeOutElements() {
+    return new Promise(resolve => {
+      textSlideEl.style.opacity = "0";
+      imageSlideEl.style.opacity = "0";
+      setTimeout(resolve, 300);
     });
+  }
 
-    gsap.from("h1", {
-      y: -30,
-      opacity: 0,
-      duration: 1,
-      ease: "power2.out"
-    });
-  </script>
+  function fadeInElements() {
+    textSlideEl.style.opacity = "1";
+    imageSlideEl.style.opacity = "1";
+  }
+
+  function updateContent(index) {
+    secondaryTitleEl.textContent = advantages[index].secondaryTitle;
+    mainTitleEl.textContent = advantages[index].title;
+    descEl.textContent = advantages[index].desc;
+  }
+
+  async function changeSlide(newIndex) {
+    if (isAnimating) return;
+    isAnimating = true;
+
+    await fadeOutElements();
+    updateContent(newIndex);
+    fadeInElements();
+
+    currentIndex = newIndex;
+    setTimeout(() => {
+      isAnimating = false;
+    }, 350);
+  }
+
+  prevBtn.addEventListener("click", () => {
+    let newIndex = (currentIndex - 1 + advantages.length) % advantages.length;
+    changeSlide(newIndex);
+  });
+
+  nextBtn.addEventListener("click", () => {
+    let newIndex = (currentIndex + 1) % advantages.length;
+    changeSlide(newIndex);
+  });
+
+  // Initialize first slide
+  updateContent(currentIndex);
+  fadeInElements();
+</script>
+
 </body>
 </html>
