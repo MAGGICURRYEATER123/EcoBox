@@ -3,9 +3,8 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>EcoBox Project - Environmental Advantages</title>
+<title>EcoBox Project</title>
 <style>
-  /* Reset & base */
   body {
     margin: 0; padding: 0;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -17,68 +16,133 @@
     margin: 0;
   }
 
-  /* HEADER SECTION */
+  /* ===== Fade-in on scroll effect styles (stronger) ===== */
+  .fade-section {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 1.2s ease, transform 1.2s ease;
+  }
+  .fade-section.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ===== EcoBox Header Section ===== */
   #header-section {
-    max-width: 960px;
-    margin: 4rem auto 2rem;
-    padding: 0 2.5rem;
     text-align: center;
+    padding: 5rem 2rem 4rem;
+  }
+  #header-section h1 {
+    font-size: 5.5rem;
+    font-weight: 900;
+    color: white;
+    letter-spacing: 0.05em;
+    user-select: none;
+  }
+  #header-section p {
+    font-size: 1.4rem;
+    font-weight: 300;
+    margin-top: 1rem;
+    color: #ccc;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    font-style: italic;
     user-select: none;
   }
 
-  #eco-title {
-    font-size: 4.5rem;
-    font-weight: 300; /* thin */
-    letter-spacing: 0.1em;
-    margin-bottom: 0.5rem;
-    color: #ffffff;
+  /* ===== Core Technologies Section ===== */
+  #core-tech-section {
+    max-width: 1100px;
+    margin: 0 auto 5rem;
+    padding: 0 1.5rem;
+  }
+  #core-tech-section h2 {
+    color: #00ffff;
+    font-size: 3.8rem;
+    font-weight: 900;
+    text-align: center;
+    margin-bottom: 3rem;
     user-select: none;
-    font-style: normal;
+    letter-spacing: 0.05em;
+  }
+  .tech-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2.8rem 3rem;
+  }
+  .tech-box {
+    border: 2px solid #00ffff;
+    border-radius: 12px;
+    box-shadow:
+      0 0 10px #00ffffaa,
+      0 0 25px #00ffffcc,
+      inset 0 0 15px #00ffffaa;
+    padding: 1.8rem 1.5rem;
+    background: #121212;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    user-select: none;
+    transition: box-shadow 0.3s ease;
+  }
+  .tech-box:hover {
+    box-shadow:
+      0 0 18px #00ffffee,
+      0 0 40px #00ffffff,
+      inset 0 0 20px #00ffffee;
+  }
+  .tech-title {
+    font-size: 2rem;
+    font-weight: 900;
+    color: #e0ffff;
+    margin-bottom: 0.8rem;
+    user-select: text;
+    letter-spacing: 0.03em;
+  }
+  .tech-desc {
+    font-size: 1.1rem;
+    font-weight: 400;
+    color: #bbb;
+    text-align: center;
+    font-style: italic;
+    user-select: text;
+    line-height: 1.4;
   }
 
-  #eco-subtitle {
-    font-size: 1.3rem;
-    font-weight: 300; /* thin and sleek */
-    color: #bbbbbb;
-    letter-spacing: 0.12em;
-    font-style: italic; /* sleek style */
-    max-width: 700px;
-    margin: 0 auto;
-  }
-
-  /* ENVIRONMENTAL SLIDER SECTION */
+  /* ===== Environmental Advantages Section ===== */
   #env-section {
     max-width: 960px;
-    margin: 3rem auto 4rem;
+    margin: 0 auto 6rem;
     padding: 2rem 2.5rem 3rem;
     background: linear-gradient(90deg, #121212, #222);
     border-radius: 10px;
     box-shadow: 0 0 15px #111;
     user-select: none;
   }
-
-  #main-title {
-    text-align: center;
-    font-size: 3rem;
+  #env-section h2 {
+    color: white;
+    font-size: 3.8rem;
     font-weight: 900;
-    color: #fff;
-    margin-bottom: 2rem;
+    text-align: center;
+    margin-bottom: 3rem;
+    user-select: none;
+    letter-spacing: 0.04em;
   }
-
   #slider-container {
     display: flex;
     position: relative;
     align-items: center;
+    justify-content: center; /* Center everything horizontally */
   }
-
   .arrow-btn {
     background: transparent;
     border: none;
-    font-size: 2.5rem;
+    font-size: 2.7rem;
     font-weight: 900;
     color: #eee;
     cursor: pointer;
-    padding: 0 12px;
+    padding: 0 15px;
     transition: color 0.2s ease;
     user-select: none;
     line-height: 1;
@@ -86,7 +150,6 @@
   .arrow-btn:hover {
     color: #a0f7a1;
   }
-
   #slide-content {
     flex: 1 1 auto;
     display: flex;
@@ -94,39 +157,45 @@
     overflow: hidden;
     align-items: center;
     min-height: 260px;
+    justify-content: center; /* Center text and image horizontally */
   }
-
   .text-slide {
     min-width: 400px;
     max-width: 450px;
     flex-shrink: 0;
     opacity: 1;
     transition: opacity 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
   }
   .secondary-title {
-    font-size: 1.5rem;
-    font-weight: 700;
+    font-size: 1.7rem;
+    font-weight: 900;
     color: #a0f7a1;
     margin-bottom: 0.8rem;
+    letter-spacing: 0.04em;
   }
   .desc-text {
-    font-size: 1.1rem;
-    line-height: 1.5;
+    font-size: 1.2rem;
+    line-height: 1.6;
     color: #ccc;
-    font-weight: 500;
+    font-weight: 400;
+    font-style: italic;
   }
   .text-slide h2 {
-    font-size: 2rem;
+    font-size: 2.2rem;
     margin-bottom: 1rem;
-    font-weight: 800;
+    font-weight: 900;
     color: #fff;
+    letter-spacing: 0.04em;
   }
-
   .image-slide {
     min-width: 320px;
     flex-shrink: 0;
     opacity: 1;
-    transition: opacity 0.3s ease;
+    transition: opacity 0.3s ease, box-shadow 0.4s ease;
 
     /* Neon glowing border box */
     border: 2px solid #a0f7a1;
@@ -139,38 +208,51 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 260px; /* fixed height so it looks neat */
+    height: 260px;
+  }
+  /* Neon glow pulse animation */
+  @keyframes neonPulse {
+    0%, 100% {
+      box-shadow:
+        0 0 8px #a0f7a1aa,
+        0 0 20px #a0f7a1cc,
+        inset 0 0 10px #a0f7a1aa;
+    }
+    50% {
+      box-shadow:
+        0 0 22px #a0f7a1ff,
+        0 0 45px #a0f7a1ff,
+        inset 0 0 20px #a0f7a1ff;
+    }
+  }
+  .neon-glow {
+    animation: neonPulse 0.8s ease forwards;
   }
 
   /* Responsive */
   @media (max-width: 800px) {
-    #header-section {
-      margin: 2rem auto 1.5rem;
-      padding: 0 1.5rem;
-    }
-    #eco-title {
-      font-size: 3rem;
-      letter-spacing: 0.08em;
-    }
-    #eco-subtitle {
-      font-size: 1rem;
-      letter-spacing: 0.1em;
-    }
-
-    #env-section {
+    #core-tech-section {
       max-width: 95vw;
-      padding: 1.5rem 1rem 2rem;
+      padding: 0 1rem 3rem;
     }
-    #main-title {
-      font-size: 2.2rem;
-      margin-bottom: 1.5rem;
+    #core-tech-section h2,
+    #env-section h2 {
+      font-size: 2.8rem;
+      margin-bottom: 2rem;
+    }
+    #header-section h1 {
+      font-size: 4rem;
+    }
+    #header-section p {
+      font-size: 1.2rem;
+      max-width: 90vw;
     }
     #slider-container {
       flex-direction: column;
       align-items: center;
     }
     .arrow-btn {
-      font-size: 2rem;
+      font-size: 2.3rem;
       padding: 0 8px;
       margin: 1rem 0;
     }
@@ -192,21 +274,55 @@
       height: 200px;
       margin: 1rem 0 0;
     }
+    #core-tech-section .tech-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem 1rem;
+    }
   }
 </style>
 </head>
 <body>
 
-<!-- HEADER -->
-<section id="header-section" aria-label="EcoBox Introduction">
-  <h1 id="eco-title">EcoBox</h1>
-  <p id="eco-subtitle">Innovative, sustainable climate control powered by cutting-edge design and technology.</p>
+<!-- Header Section -->
+<section id="header-section" class="fade-section" aria-label="EcoBox Project Introduction">
+  <h1>EcoBox</h1>
+  <p>Innovation in smart climate control, sustainable hydration, and efficient environmental monitoring.</p>
 </section>
 
-<!-- ENVIRONMENTAL ADVANTAGES SLIDER -->
-<section id="env-section" aria-label="EcoBox Environmental Advantages">
-  <h1 id="main-title">EcoBox: Environmental Advantages</h1>
+<!-- Core Technologies Section -->
+<section id="core-tech-section" class="fade-section" aria-label="Core Technologies">
+  <h2>Core Technologies</h2>
+  <div class="tech-grid">
+    <div class="tech-box">
+      <div class="tech-title">ESP32</div>
+      <div class="tech-desc">The powerful brain running all smart controls with ultra-efficient processing.</div>
+    </div>
+    <div class="tech-box">
+      <div class="tech-title">Arduino Uno</div>
+      <div class="tech-desc">Reliable microcontroller handling sensor data and device management.</div>
+    </div>
+    <div class="tech-box">
+      <div class="tech-title">DHT11 Sensor</div>
+      <div class="tech-desc">Measures temperature and humidity for precise climate monitoring.</div>
+    </div>
+    <div class="tech-box">
+      <div class="tech-title">Soil Moisture Sensor</div>
+      <div class="tech-desc">Detects soil hydration to prevent overwatering and conserve water.</div>
+    </div>
+    <div class="tech-box">
+      <div class="tech-title">Fan</div>
+      <div class="tech-desc">Circulates air to maintain optimal temperature and humidity levels.</div>
+    </div>
+    <div class="tech-box">
+      <div class="tech-title">Water Pump</div>
+      <div class="tech-desc">Delivers precise irrigation controlled by moisture readings.</div>
+    </div>
+  </div>
+</section>
 
+<!-- Environmental Advantages Section -->
+<section id="env-section" class="fade-section" aria-label="EcoBox Environmental Advantages">
+  <h2>EcoBox: Environmental Advantages</h2>
   <div id="slider-container">
     <button class="arrow-btn" id="prev-btn" aria-label="Previous advantage">&lt;</button>
 
@@ -227,6 +343,23 @@
 </section>
 
 <script>
+  // Intersection Observer for fade-in effect
+  const fadeSections = document.querySelectorAll('.fade-section');
+  const observerOptions = { threshold: 0.2 };
+
+  const fadeObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      } else {
+        entry.target.classList.remove('visible');
+      }
+    });
+  }, observerOptions);
+
+  fadeSections.forEach(section => fadeObserver.observe(section));
+
+  // Slide data
   const advantages = [
     {
       secondaryTitle: "Ultra-Efficient Power",
@@ -292,12 +425,18 @@
 
     await fadeOutElements();
     updateContent(newIndex);
+
+    // Add neon glow pulse effect on image
+    imageSlideEl.classList.add('neon-glow');
     fadeInElements();
 
-    currentIndex = newIndex;
+    // Remove the neon glow class after animation ends so it can be triggered again
     setTimeout(() => {
+      imageSlideEl.classList.remove('neon-glow');
       isAnimating = false;
-    }, 350);
+    }, 800);
+    
+    currentIndex = newIndex;
   }
 
   prevBtn.addEventListener("click", () => {
