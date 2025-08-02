@@ -1,458 +1,384 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>EcoBox Project</title>
-<style>
-  body {
-    margin: 0; padding: 0;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(135deg, #0a0a0a, #3a3a3a);
-    color: #eee;
-    overflow-x: hidden;
-  }
-  h1, h2, h3, p {
-    margin: 0;
-  }
-
-  /* ===== Fade-in on scroll effect styles (stronger) ===== */
-  .fade-section {
-    opacity: 0;
-    transform: translateY(40px);
-    transition: opacity 1.2s ease, transform 1.2s ease;
-  }
-  .fade-section.visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  /* ===== EcoBox Header Section ===== */
-  #header-section {
-    text-align: center;
-    padding: 5rem 2rem 4rem;
-  }
-  #header-section h1 {
-    font-size: 5.5rem;
-    font-weight: 900;
-    color: white;
-    letter-spacing: 0.05em;
-    user-select: none;
-  }
-  #header-section p {
-    font-size: 1.4rem;
-    font-weight: 300;
-    margin-top: 1rem;
-    color: #ccc;
-    max-width: 600px;
-    margin-left: auto;
-    margin-right: auto;
-    font-style: italic;
-    user-select: none;
-  }
-
-  /* ===== Core Technologies Section ===== */
-  #core-tech-section {
-    max-width: 1100px;
-    margin: 0 auto 5rem;
-    padding: 0 1.5rem;
-  }
-  #core-tech-section h2 {
-    color: #00ffff;
-    font-size: 3.8rem;
-    font-weight: 900;
-    text-align: center;
-    margin-bottom: 3rem;
-    user-select: none;
-    letter-spacing: 0.05em;
-  }
-  .tech-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 2.8rem 3rem;
-  }
-  .tech-box {
-    border: 2px solid #00ffff;
-    border-radius: 12px;
-    box-shadow:
-      0 0 10px #00ffffaa,
-      0 0 25px #00ffffcc,
-      inset 0 0 15px #00ffffaa;
-    padding: 1.8rem 1.5rem;
-    background: #121212;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    user-select: none;
-    transition: box-shadow 0.3s ease;
-  }
-  .tech-box:hover {
-    box-shadow:
-      0 0 18px #00ffffee,
-      0 0 40px #00ffffff,
-      inset 0 0 20px #00ffffee;
-  }
-  .tech-title {
-    font-size: 2rem;
-    font-weight: 900;
-    color: #e0ffff;
-    margin-bottom: 0.8rem;
-    user-select: text;
-    letter-spacing: 0.03em;
-  }
-  .tech-desc {
-    font-size: 1.1rem;
-    font-weight: 400;
-    color: #bbb;
-    text-align: center;
-    font-style: italic;
-    user-select: text;
-    line-height: 1.4;
-  }
-
-  /* ===== Environmental Advantages Section ===== */
-  #env-section {
-    max-width: 960px;
-    margin: 0 auto 6rem;
-    padding: 2rem 2.5rem 3rem;
-    background: linear-gradient(90deg, #121212, #222);
-    border-radius: 10px;
-    box-shadow: 0 0 15px #111;
-    user-select: none;
-  }
-  #env-section h2 {
-    color: white;
-    font-size: 3.8rem;
-    font-weight: 900;
-    text-align: center;
-    margin-bottom: 3rem;
-    user-select: none;
-    letter-spacing: 0.04em;
-  }
-  #slider-container {
-    display: flex;
-    position: relative;
-    align-items: center;
-    justify-content: center; /* Center everything horizontally */
-  }
-  .arrow-btn {
-    background: transparent;
-    border: none;
-    font-size: 2.7rem;
-    font-weight: 900;
-    color: #eee;
-    cursor: pointer;
-    padding: 0 15px;
-    transition: color 0.2s ease;
-    user-select: none;
-    line-height: 1;
-  }
-  .arrow-btn:hover {
-    color: #a0f7a1;
-  }
-  #slide-content {
-    flex: 1 1 auto;
-    display: flex;
-    gap: 2rem;
-    overflow: hidden;
-    align-items: center;
-    min-height: 260px;
-    justify-content: center; /* Center text and image horizontally */
-  }
-  .text-slide {
-    min-width: 400px;
-    max-width: 450px;
-    flex-shrink: 0;
-    opacity: 1;
-    transition: opacity 0.3s ease;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    text-align: center;
-  }
-  .secondary-title {
-    font-size: 1.7rem;
-    font-weight: 900;
-    color: #a0f7a1;
-    margin-bottom: 0.8rem;
-    letter-spacing: 0.04em;
-  }
-  .desc-text {
-    font-size: 1.2rem;
-    line-height: 1.6;
-    color: #ccc;
-    font-weight: 400;
-    font-style: italic;
-  }
-  .text-slide h2 {
-    font-size: 2.2rem;
-    margin-bottom: 1rem;
-    font-weight: 900;
-    color: #fff;
-    letter-spacing: 0.04em;
-  }
-  .image-slide {
-    min-width: 320px;
-    flex-shrink: 0;
-    opacity: 1;
-    transition: opacity 0.3s ease, box-shadow 0.4s ease;
-
-    /* Neon glowing border box */
-    border: 2px solid #a0f7a1;
-    border-radius: 14px;
-    box-shadow:
-      0 0 8px #a0f7a1aa,
-      0 0 20px #a0f7a1cc,
-      inset 0 0 10px #a0f7a1aa;
-    background: #121212;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 260px;
-  }
-  /* Neon glow pulse animation */
-  @keyframes neonPulse {
-    0%, 100% {
-      box-shadow:
-        0 0 8px #a0f7a1aa,
-        0 0 20px #a0f7a1cc,
-        inset 0 0 10px #a0f7a1aa;
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>EcoBox Project</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #0a0a0a, #2b2b2b);
+      color: #eee;
+      overflow-x: hidden;
     }
-    50% {
-      box-shadow:
-        0 0 22px #a0f7a1ff,
-        0 0 45px #a0f7a1ff,
-        inset 0 0 20px #a0f7a1ff;
-    }
-  }
-  .neon-glow {
-    animation: neonPulse 0.8s ease forwards;
-  }
 
-  /* Responsive */
-  @media (max-width: 800px) {
-    #core-tech-section {
-      max-width: 95vw;
-      padding: 0 1rem 3rem;
+    h1, h2, h3, p {
+      margin: 0;
     }
-    #core-tech-section h2,
-    #env-section h2 {
-      font-size: 2.8rem;
-      margin-bottom: 2rem;
+
+    .fade-section {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 1.2s ease, transform 1.2s ease;
+    }
+    .fade-section.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    #header-section {
+      text-align: center;
+      padding: 5rem 2rem 4rem;
     }
     #header-section h1 {
-      font-size: 4rem;
+      font-size: 5.5rem;
+      font-weight: 900;
+      color: white;
+      letter-spacing: 0.05em;
+      user-select: none;
     }
     #header-section p {
-      font-size: 1.2rem;
-      max-width: 90vw;
+      font-size: 1.4rem;
+      font-weight: 300;
+      margin-top: 1rem;
+      color: #ccc;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+      font-style: italic;
+      font-family: cursive, 'Segoe UI', sans-serif;
+      user-select: none;
     }
-    #slider-container {
+
+    #core-tech-section {
+      max-width: 1100px;
+      margin: 0 auto 5rem;
+      padding: 0 1.5rem;
+    }
+    #core-tech-section h2 {
+      color: #00ffff;
+      font-size: 3.8rem;
+      font-weight: 900;
+      text-align: center;
+      margin-bottom: 3rem;
+      user-select: none;
+      letter-spacing: 0.05em;
+    }
+    .tech-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2.8rem 3rem;
+    }
+    .tech-box {
+      background: #1c1c1c;
+      border: 2px solid #ffffff33;
+      border-radius: 12px;
+      box-shadow:
+        0 0 10px #ffffff22,
+        0 0 25px #ffffff33,
+        inset 0 0 10px #ffffff22;
+      padding: 1.8rem 1.5rem;
+      display: flex;
       flex-direction: column;
       align-items: center;
+      user-select: none;
+      transition: box-shadow 0.3s ease, border 0.3s ease;
     }
-    .arrow-btn {
-      font-size: 2.3rem;
-      padding: 0 8px;
-      margin: 1rem 0;
+    .tech-box:hover {
+      box-shadow:
+        0 0 18px #ffffff66,
+        0 0 35px #ffffff88,
+        inset 0 0 15px #ffffff44;
+      border: 2px solid #ffffff88;
     }
-    #slide-content {
-      width: 100%;
-      overflow: visible;
-      justify-content: center;
-      min-height: auto;
+    .tech-title {
+      font-size: 2rem;
+      font-weight: 900;
+      color: #ffffff;
+      margin-bottom: 0.8rem;
+      user-select: text;
+      letter-spacing: 0.03em;
     }
-    .text-slide {
-      max-width: 90vw;
-      min-width: auto;
+    .tech-desc {
+      font-size: 1.1rem;
+      font-weight: 400;
+      color: #f0f0f0;
       text-align: center;
-      opacity: 1 !important;
-      transition: none !important;
+      font-style: italic;
+      font-family: cursive, 'Segoe UI', sans-serif;
+      user-select: text;
+      line-height: 1.4;
     }
+
+    #env-section {
+      max-width: 960px;
+      margin: 4rem auto 6rem;
+      padding: 2rem 2.5rem 3rem;
+      user-select: none;
+      background: transparent;
+    }
+
+    #slider-container {
+      display: flex;
+      position: relative;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .arrow-btn {
+      background: transparent;
+      border: none;
+      font-size: 2.5rem;
+      font-weight: 900;
+      color: #eee;
+      cursor: pointer;
+      padding: 0 12px;
+      transition: color 0.2s ease;
+      user-select: none;
+      line-height: 1;
+    }
+    .arrow-btn:hover {
+      color: #a0f7a1;
+    }
+
+    #slide-content {
+      flex: 1 1 auto;
+      display: flex;
+      gap: 2rem;
+      overflow: hidden;
+      align-items: center;
+      min-height: 260px;
+      justify-content: center;
+    }
+
+    .text-slide {
+      min-width: 400px;
+      max-width: 450px;
+      flex-shrink: 0;
+      opacity: 1;
+      transition: opacity 0.6s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      text-align: left;
+    }
+    .secondary-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #a0f7a1;
+      margin-bottom: 0.8rem;
+    }
+    #main-title-slide {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      font-weight: 800;
+      color: #fff;
+    }
+    .desc-text {
+      font-size: 1.1rem;
+      line-height: 1.5;
+      color: #ccc;
+      font-weight: 500;
+    }
+
     .image-slide {
-      min-width: 90vw;
-      height: 200px;
-      margin: 1rem 0 0;
+      min-width: 320px;
+      flex-shrink: 0;
+      opacity: 1;
+      transition: opacity 0.6s ease;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 260px;
+      background: transparent;
+      border: none;
+      box-shadow: none;
+      color: #a0f7a1;
+      font-style: italic;
     }
-    #core-tech-section .tech-grid {
-      grid-template-columns: repeat(2, 1fr);
-      gap: 1.5rem 1rem;
+
+    @media (max-width: 800px) {
+      #core-tech-section {
+        max-width: 95vw;
+        padding: 0 1rem 3rem;
+      }
+      #core-tech-section h2 {
+        font-size: 2.8rem;
+        margin-bottom: 2rem;
+      }
+      #header-section h1 {
+        font-size: 4rem;
+      }
+      #header-section p {
+        font-size: 1.2rem;
+        max-width: 90vw;
+      }
+      #core-tech-section .tech-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem 1rem;
+      }
+      #env-section {
+        max-width: 95vw;
+        padding: 1.5rem 1rem 2rem;
+        margin: 3rem auto 4rem;
+      }
+      #slider-container {
+        flex-direction: column;
+        align-items: center;
+      }
+      .arrow-btn {
+        font-size: 2rem;
+        padding: 0 8px;
+        margin: 1rem 0;
+      }
+      #slide-content {
+        width: 100%;
+        overflow: visible;
+        justify-content: center;
+        min-height: auto;
+      }
+      .text-slide {
+        max-width: 90vw;
+        min-width: auto;
+        text-align: left;
+        opacity: 1 !important;
+        transition: none !important;
+      }
+      .image-slide {
+        min-width: 90vw;
+        height: 200px;
+        margin: 1rem 0 0;
+      }
     }
-  }
-</style>
+  </style>
 </head>
 <body>
+  <!-- Header -->
+  <section id="header-section" class="fade-section">
+    <h1>EcoBox</h1>
+    <p>Innovation in smart climate control, sustainable hydration, and efficient environmental monitoring.</p>
+  </section>
 
-<!-- Header Section -->
-<section id="header-section" class="fade-section" aria-label="EcoBox Project Introduction">
-  <h1>EcoBox</h1>
-  <p>Innovation in smart climate control, sustainable hydration, and efficient environmental monitoring.</p>
-</section>
-
-<!-- Core Technologies Section -->
-<section id="core-tech-section" class="fade-section" aria-label="Core Technologies">
-  <h2>Core Technologies</h2>
-  <div class="tech-grid">
-    <div class="tech-box">
-      <div class="tech-title">ESP32</div>
-      <div class="tech-desc">The powerful brain running all smart controls with ultra-efficient processing.</div>
-    </div>
-    <div class="tech-box">
-      <div class="tech-title">Arduino Uno</div>
-      <div class="tech-desc">Reliable microcontroller handling sensor data and device management.</div>
-    </div>
-    <div class="tech-box">
-      <div class="tech-title">DHT11 Sensor</div>
-      <div class="tech-desc">Measures temperature and humidity for precise climate monitoring.</div>
-    </div>
-    <div class="tech-box">
-      <div class="tech-title">Soil Moisture Sensor</div>
-      <div class="tech-desc">Detects soil hydration to prevent overwatering and conserve water.</div>
-    </div>
-    <div class="tech-box">
-      <div class="tech-title">Fan</div>
-      <div class="tech-desc">Circulates air to maintain optimal temperature and humidity levels.</div>
-    </div>
-    <div class="tech-box">
-      <div class="tech-title">Water Pump</div>
-      <div class="tech-desc">Delivers precise irrigation controlled by moisture readings.</div>
-    </div>
-  </div>
-</section>
-
-<!-- Environmental Advantages Section -->
-<section id="env-section" class="fade-section" aria-label="EcoBox Environmental Advantages">
-  <h2>EcoBox: Environmental Advantages</h2>
-  <div id="slider-container">
-    <button class="arrow-btn" id="prev-btn" aria-label="Previous advantage">&lt;</button>
-
-    <div id="slide-content">
-      <div class="text-slide" id="text-slide">
-        <h3 class="secondary-title" id="secondary-title"></h3>
-        <h2 id="main-title-slide"></h2>
-        <p class="desc-text" id="desc-text"></p>
+  <!-- Core Technologies -->
+  <section id="core-tech-section" class="fade-section">
+    <h2>Core Technologies</h2>
+    <div class="tech-grid">
+      <div class="tech-box">
+        <div class="tech-title">ESP32</div>
+        <div class="tech-desc">The powerful brain running all smart controls with ultra-efficient processing.</div>
       </div>
-      <div class="image-slide" id="image-slide">
-        <!-- Neon box placeholder for image -->
-        <span style="color: #a0f7a1; font-style: italic;">Image placeholder</span>
+      <div class="tech-box">
+        <div class="tech-title">Arduino Uno</div>
+        <div class="tech-desc">Reliable microcontroller handling sensor data and device management.</div>
+      </div>
+      <div class="tech-box">
+        <div class="tech-title">DHT11 Sensor</div>
+        <div class="tech-desc">Measures temperature and humidity for precise climate monitoring.</div>
+      </div>
+      <div class="tech-box">
+        <div class="tech-title">Soil Moisture Sensor</div>
+        <div class="tech-desc">Detects soil hydration to prevent overwatering and conserve water.</div>
+      </div>
+      <div class="tech-box">
+        <div class="tech-title">Fan</div>
+        <div class="tech-desc">Circulates air to maintain optimal temperature and humidity levels.</div>
+      </div>
+      <div class="tech-box">
+        <div class="tech-title">Water Pump</div>
+        <div class="tech-desc">Delivers precise irrigation controlled by moisture readings.</div>
       </div>
     </div>
+  </section>
 
-    <button class="arrow-btn" id="next-btn" aria-label="Next advantage">&gt;</button>
-  </div>
-</section>
+  <!-- Environmental Advantages -->
+  <section id="env-section" class="fade-section">
+    <div id="slider-container">
+      <button class="arrow-btn" id="prev-btn">&lt;</button>
+      <div id="slide-content">
+        <div class="text-slide" id="text-slide">
+          <h3 class="secondary-title" id="secondary-title"></h3>
+          <h2 id="main-title-slide"></h2>
+          <p class="desc-text" id="desc-text"></p>
+        </div>
+        <div class="image-slide" id="image-slide">Image placeholder</div>
+      </div>
+      <button class="arrow-btn" id="next-btn">&gt;</button>
+    </div>
+  </section>
 
-<script>
-  // Intersection Observer for fade-in effect
-  const fadeSections = document.querySelectorAll('.fade-section');
-  const observerOptions = { threshold: 0.2 };
+  <script>
+    const fadeSections = document.querySelectorAll('.fade-section');
+    const fadeObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('visible');
+        else entry.target.classList.remove('visible');
+      });
+    }, { threshold: 0.2 });
+    fadeSections.forEach(section => fadeObserver.observe(section));
 
-  const fadeObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-      } else {
-        entry.target.classList.remove('visible');
-      }
-    });
-  }, observerOptions);
+    const advantages = [
+      { secondaryTitle: "Ultra-Efficient Power", title: "Powerful ESP32", desc: "The ESP32’s ultra-efficient dual-core processor delivers blazing performance while reducing power consumption — perfect for 24/7 smart climate control." },
+      { secondaryTitle: "Intelligent Hydration", title: "Smart Water Saving", desc: "EcoBox’s soil moisture sensor activates irrigation only when necessary, preventing waste and promoting sustainable water use." },
+      { secondaryTitle: "Precision Comfort", title: "Optimal Climate Control", desc: "Precision temperature and humidity sensing lets EcoBox maintain ideal conditions, improving plant health and comfort." },
+      { secondaryTitle: "Set & Forget", title: "Fully Autonomous", desc: "Set it once and EcoBox runs automatically, adjusting in real-time without needing manual input." },
+      { secondaryTitle: "Green Tech", title: "Low Carbon Impact", desc: "EcoBox’s optimized hardware and software reduce electricity demand, helping lower your environmental footprint." }
+    ];
 
-  fadeSections.forEach(section => fadeObserver.observe(section));
+    const secondaryTitleEl = document.getElementById("secondary-title");
+    const mainTitleEl = document.getElementById("main-title-slide");
+    const descEl = document.getElementById("desc-text");
+    const textSlideEl = document.getElementById("text-slide");
+    const imageSlideEl = document.getElementById("image-slide");
+    const prevBtn = document.getElementById("prev-btn");
+    const nextBtn = document.getElementById("next-btn");
+    let currentIndex = 0;
+    let isAnimating = false;
+    let autoSlideTimeout;
 
-  // Slide data
-  const advantages = [
-    {
-      secondaryTitle: "Ultra-Efficient Power",
-      title: "Powerful ESP32",
-      desc: "The ESP32’s ultra-efficient dual-core processor delivers blazing performance while reducing power consumption — perfect for 24/7 smart climate control."
-    },
-    {
-      secondaryTitle: "Intelligent Hydration",
-      title: "Smart Water Saving",
-      desc: "EcoBox’s soil moisture sensor activates irrigation only when necessary, preventing waste and promoting sustainable water use."
-    },
-    {
-      secondaryTitle: "Precision Comfort",
-      title: "Optimal Climate Control",
-      desc: "Precision temperature and humidity sensing lets EcoBox maintain ideal conditions, improving plant health and comfort."
-    },
-    {
-      secondaryTitle: "Set & Forget",
-      title: "Fully Autonomous",
-      desc: "Set it once and EcoBox runs automatically, adjusting in real-time without needing manual input."
-    },
-    {
-      secondaryTitle: "Green Tech",
-      title: "Low Carbon Impact",
-      desc: "EcoBox’s optimized hardware and software reduce electricity demand, helping lower your environmental footprint."
+    function fadeOutElements() {
+      return new Promise(resolve => {
+        textSlideEl.style.opacity = "0";
+        imageSlideEl.style.opacity = "0";
+        setTimeout(resolve, 600);
+      });
     }
-  ];
-
-  const secondaryTitleEl = document.getElementById("secondary-title");
-  const mainTitleEl = document.getElementById("main-title-slide");
-  const descEl = document.getElementById("desc-text");
-  const textSlideEl = document.getElementById("text-slide");
-  const imageSlideEl = document.getElementById("image-slide");
-
-  const prevBtn = document.getElementById("prev-btn");
-  const nextBtn = document.getElementById("next-btn");
-
-  let currentIndex = 0;
-  let isAnimating = false;
-
-  function fadeOutElements() {
-    return new Promise(resolve => {
-      textSlideEl.style.opacity = "0";
-      imageSlideEl.style.opacity = "0";
-      setTimeout(resolve, 300);
+    function fadeInElements() {
+      textSlideEl.style.opacity = "1";
+      imageSlideEl.style.opacity = "1";
+    }
+    function updateContent(index) {
+      secondaryTitleEl.textContent = advantages[index].secondaryTitle;
+      mainTitleEl.textContent = advantages[index].title;
+      descEl.textContent = advantages[index].desc;
+    }
+    async function changeSlide(newIndex) {
+      if (isAnimating) return;
+      isAnimating = true;
+      clearTimeout(autoSlideTimeout);
+      await fadeOutElements();
+      updateContent(newIndex);
+      fadeInElements();
+      currentIndex = newIndex;
+      autoSlideTimeout = setTimeout(() => {
+        changeSlide((currentIndex + 1) % advantages.length);
+      }, 10000);
+      setTimeout(() => { isAnimating = false; }, 650);
+    }
+    prevBtn.addEventListener("click", () => {
+      let newIndex = (currentIndex - 1 + advantages.length) % advantages.length;
+      changeSlide(newIndex);
     });
-  }
-
-  function fadeInElements() {
-    textSlideEl.style.opacity = "1";
-    imageSlideEl.style.opacity = "1";
-  }
-
-  function updateContent(index) {
-    secondaryTitleEl.textContent = advantages[index].secondaryTitle;
-    mainTitleEl.textContent = advantages[index].title;
-    descEl.textContent = advantages[index].desc;
-  }
-
-  async function changeSlide(newIndex) {
-    if (isAnimating) return;
-    isAnimating = true;
-
-    await fadeOutElements();
-    updateContent(newIndex);
-
-    // Add neon glow pulse effect on image
-    imageSlideEl.classList.add('neon-glow');
+    nextBtn.addEventListener("click", () => {
+      let newIndex = (currentIndex + 1) % advantages.length;
+      changeSlide(newIndex);
+    });
+    updateContent(currentIndex);
     fadeInElements();
-
-    // Remove the neon glow class after animation ends so it can be triggered again
-    setTimeout(() => {
-      imageSlideEl.classList.remove('neon-glow');
-      isAnimating = false;
-    }, 800);
-    
-    currentIndex = newIndex;
-  }
-
-  prevBtn.addEventListener("click", () => {
-    let newIndex = (currentIndex - 1 + advantages.length) % advantages.length;
-    changeSlide(newIndex);
-  });
-
-  nextBtn.addEventListener("click", () => {
-    let newIndex = (currentIndex + 1) % advantages.length;
-    changeSlide(newIndex);
-  });
-
-  // Initialize first slide
-  updateContent(currentIndex);
-  fadeInElements();
-</script>
-
+    autoSlideTimeout = setTimeout(() => {
+      changeSlide((currentIndex + 1) % advantages.length);
+    }, 10000);
+  </script>
 </body>
 </html>
