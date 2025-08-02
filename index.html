@@ -217,6 +217,110 @@
       outline-offset:4px;
     }
 
+    /* ====== MUST KNOW HIGHLIGHTS SECTION ====== */
+    #highlights-section {
+      margin-top: 3rem; /* closer to slides */
+      color:#fafafa;
+      position:relative;
+      padding-top: 5rem;
+      padding-bottom: 6rem;
+      text-align: center;
+      overflow: visible;
+    }
+    #highlights-section h2 {
+      font-size: 4.5rem;
+      font-weight: 900;
+      color: #fff;
+      text-transform: uppercase;
+      margin-bottom: 4rem;
+      position: relative;
+      user-select:none;
+      letter-spacing: 0.15em;
+    }
+    /* Mirror text floor effect */
+    #highlights-section h2::after {
+      content: attr(data-text);
+      position: absolute;
+      left: 0; right: 0;
+      bottom: -1.2em;
+      color: #fff;
+      opacity: 0.15;
+      transform: scaleY(-1);
+      filter: blur(3px);
+      z-index: -1;
+      letter-spacing: 0.15em;
+    }
+
+    .highlight-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2.8rem 4rem;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    .highlight-box {
+      position: relative;
+      background: #1a1a1a;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 0 20px #5a7f9daa inset;
+      display: flex;
+      align-items: center;
+      padding: 2rem 4rem;
+      min-height: 90px;
+      cursor: default;
+      border: 1.5px solid transparent;
+      transition: border-color 0.7s ease;
+      max-width: 900px;
+      margin: 0 auto;
+      /* subtle neon glow from left */
+      box-shadow:
+        inset 30px 0 60px 3px #bde7ff88,
+        inset 0 0 20px 3px #a0f7a1cc;
+    }
+
+    .highlight-title {
+      flex: 1;
+      font-weight: 900;
+      font-size: 1.7rem;
+      color: #a0f7a1;
+      text-align: left;
+      z-index: 1;
+      user-select:none;
+      min-width: 140px;
+      max-width: 220px;
+      padding-right: 2rem;
+    }
+    .highlight-desc {
+      flex: 3;
+      font-size: 1.15rem;
+      line-height: 1.3;
+      color: #fff;
+      text-align: right;
+      z-index: 1;
+      user-select:none;
+      max-width: 700px;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    /* Background blur overlay */
+    .highlight-box::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-image: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=60');
+      background-size: cover;
+      background-position: center;
+      filter: blur(10px) brightness(0.2);
+      opacity: 0.5;
+      z-index: 0;
+      border-radius: 12px;
+    }
+
+    /* Responsive */
     @media (max-width:900px) {
       .tech-grid {
         grid-template-columns:repeat(2,1fr);
@@ -228,6 +332,24 @@
       .slides-wrapper {
         flex-direction: column;
         gap: 1.5rem;
+      }
+      .highlight-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem 0;
+      }
+      .highlight-box {
+        padding: 1.5rem 2.5rem;
+      }
+      .highlight-title {
+        padding-right: 1rem;
+        font-size: 1.5rem;
+        min-width: auto;
+        max-width: none;
+      }
+      .highlight-desc {
+        font-size: 1rem;
+        max-width: none;
+        text-align: left;
       }
     }
     @media (max-width:480px) {
@@ -243,6 +365,7 @@
     <button data-target="header-section" class="active">Overview</button>
     <button data-target="core-tech-section">Technologies</button>
     <button data-target="env-section">Advantages</button>
+    <button data-target="highlights-section">Highlights</button>
   </div>
 
   <section id="header-section" class="focused">
@@ -327,6 +450,28 @@
     </div>
   </section>
 
+  <section id="highlights-section">
+    <h2 data-text="MUST KNOW HIGHLIGHTS">MUST KNOW HIGHLIGHTS</h2>
+    <div class="highlight-grid">
+      <div class="highlight-box">
+        <div class="highlight-title">Structure</div>
+        <div class="highlight-desc">The structure is built with durable PVC sheets designed for greenhouse use, ensuring weather resistance and long-lasting support.</div>
+      </div>
+      <div class="highlight-box">
+        <div class="highlight-title">Space Optimization</div>
+        <div class="highlight-desc">The layout is carefully planned to fully utilize the available space while maintaining an efficient and aesthetic design.</div>
+      </div>
+      <div class="highlight-box">
+        <div class="highlight-title">Advanced Ventilation</div>
+        <div class="highlight-desc">State-of-the-art ventilation systems ensure consistent airflow and temperature control, enhancing plant growth.</div>
+      </div>
+      <div class="highlight-box">
+        <div class="highlight-title">Smart Irrigation</div>
+        <div class="highlight-desc">Automated watering systems intelligently adjust irrigation based on soil moisture, conserving water and promoting healthy plants.</div>
+      </div>
+    </div>
+  </section>
+
 <script>
   const slides = [...document.querySelectorAll('.slide-item')];
   const dots = [...document.querySelectorAll('.dot')];
@@ -389,8 +534,7 @@
   const sections = [...document.querySelectorAll('section')];
 
   window.onscroll = () => {
-    const y = window
-.scrollY + window.innerHeight / 3;
+    const y = window.scrollY + window.innerHeight / 3;
     sections.forEach((s, i) => {
       const inView = y >= s.offsetTop && y < s.offsetTop + s.offsetHeight;
       s.classList.toggle('focused', inView);
