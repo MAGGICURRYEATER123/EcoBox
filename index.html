@@ -1,384 +1,409 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
   <title>EcoBox Project</title>
   <style>
     body {
-      margin: 0;
-      padding: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(135deg, #0a0a0a, #2b2b2b);
-      color: #eee;
-      overflow-x: hidden;
+      margin:0; padding:0;
+      font-family:cursive,'Segoe UI',sans-serif;
+      background:
+        radial-gradient(circle at center, #1a1a1a 0%, #0b0b0b 80%, #000000 100%);
+      color:#fafafa;
+      scroll-behavior:smooth;
     }
-
-    h1, h2, h3, p {
-      margin: 0;
+    section {
+      scroll-margin-top:70px;
+      padding-top:6rem;
+      padding-bottom:8rem;
+      max-width:1100px; margin:0 auto;
     }
-
-    .fade-section {
-      opacity: 0;
-      transform: translateY(40px);
-      transition: opacity 1.2s ease, transform 1.2s ease;
-    }
-    .fade-section.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
     #header-section {
-      text-align: center;
-      padding: 5rem 2rem 4rem;
+      transform-origin:center top;
+      transition:transform .7s ease;
+      transform:scale(.94);
+      text-align:center;
+      padding:5rem 1rem 4rem;
+      color: #fafafa;
     }
-    #header-section h1 {
-      font-size: 5.5rem;
-      font-weight: 900;
-      color: white;
-      letter-spacing: 0.05em;
-      user-select: none;
+    #header-section.focused{transform:scale(1);}
+    #header-section h1{
+      font-size:5rem;
+      font-weight:900;
+      margin-bottom:.5rem;
+      color: #fafafa;
     }
-    #header-section p {
-      font-size: 1.4rem;
-      font-weight: 300;
-      margin-top: 1rem;
-      color: #ccc;
-      max-width: 600px;
-      margin-left: auto;
-      margin-right: auto;
-      font-style: italic;
-      font-family: cursive, 'Segoe UI', sans-serif;
-      user-select: none;
+    #header-section p{
+      font-style:italic;
+      font-weight:300;
+      color:#ddd;
     }
 
     #core-tech-section {
-      max-width: 1100px;
-      margin: 0 auto 5rem;
-      padding: 0 1.5rem;
+      transform-origin:center top;
+      transition:transform .7s ease;
+      transform:scale(1);
+      text-align:center;
+      padding:0 1.5rem;
+      margin-bottom:6rem;
+      color: #fafafa;
     }
+    #core-tech-section:not(.focused){transform:scale(.92);}
     #core-tech-section h2 {
-      color: #00ffff;
-      font-size: 3.8rem;
-      font-weight: 900;
-      text-align: center;
-      margin-bottom: 3rem;
-      user-select: none;
-      letter-spacing: 0.05em;
+      font-size:3rem;
+      margin-bottom:3rem;
+      font-weight:700;
+      color:#fafafa;
+      text-transform:uppercase;
+      letter-spacing:.07em;
     }
     .tech-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 2.8rem 3rem;
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:3rem;
     }
     .tech-box {
-      background: #1c1c1c;
-      border: 2px solid #ffffff33;
-      border-radius: 12px;
-      box-shadow:
-        0 0 10px #ffffff22,
-        0 0 25px #ffffff33,
-        inset 0 0 10px #ffffff22;
-      padding: 1.8rem 1.5rem;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      user-select: none;
-      transition: box-shadow 0.3s ease, border 0.3s ease;
+      background:#292929;
+      border-radius:12px;
+      padding:2rem 1.5rem;
+      box-shadow:0 0 12px #ffffff22, inset 0 0 10px #ffffff22;
+      transition:transform .3s, box-shadow .3s;
+      cursor:pointer;
+      color:#ddd;
+      text-align:left;
+      font-size: 1rem;
+      line-height: 1.5;
     }
     .tech-box:hover {
-      box-shadow:
-        0 0 18px #ffffff66,
-        0 0 35px #ffffff88,
-        inset 0 0 15px #ffffff44;
-      border: 2px solid #ffffff88;
+      transform:scale(1.05) translateY(-6px);
+      box-shadow:0 0 20px #a0f7a1dd, inset 0 0 10px #a0f7a1cc;
+      color:#a0f7a1;
     }
     .tech-title {
-      font-size: 2rem;
-      font-weight: 900;
-      color: #ffffff;
-      margin-bottom: 0.8rem;
-      user-select: text;
-      letter-spacing: 0.03em;
-    }
-    .tech-desc {
-      font-size: 1.1rem;
-      font-weight: 400;
-      color: #f0f0f0;
-      text-align: center;
-      font-style: italic;
-      font-family: cursive, 'Segoe UI', sans-serif;
-      user-select: text;
-      line-height: 1.4;
+      font-weight:900;
+      font-size:2rem;
+      margin-bottom:1rem;
+      color:#a0f7a1;
     }
 
     #env-section {
-      max-width: 960px;
-      margin: 4rem auto 6rem;
-      padding: 2rem 2.5rem 3rem;
-      user-select: none;
-      background: transparent;
+      margin-top:5rem;
+      color: #fafafa;
     }
 
-    #slider-container {
-      display: flex;
-      position: relative;
-      align-items: center;
-      justify-content: center;
+    .slides-wrapper {
+      display:flex; align-items:center;
+      justify-content:center; gap:2rem;
+      flex-wrap:wrap;
     }
-
-    .arrow-btn {
-      background: transparent;
-      border: none;
-      font-size: 2.5rem;
-      font-weight: 900;
-      color: #eee;
-      cursor: pointer;
-      padding: 0 12px;
-      transition: color 0.2s ease;
-      user-select: none;
-      line-height: 1;
+    #slide-container, #slide-image-container {
+      width:400px; height:220px; overflow:hidden;
     }
-    .arrow-btn:hover {
-      color: #a0f7a1;
+    #slide-wrapper {
+      position:relative; width:100%; height:100%;
     }
-
-    #slide-content {
-      flex: 1 1 auto;
-      display: flex;
-      gap: 2rem;
-      overflow: hidden;
-      align-items: center;
-      min-height: 260px;
-      justify-content: center;
+    .slide-item {
+      position:absolute; top:0; left:0;
+      width:100%; height:100%;
+      opacity:0; pointer-events:none;
+      transition:opacity .6s ease;
+      padding:1rem; text-align:left;
+      display:flex; flex-direction: column;
+      justify-content:flex-start;
+      color: #fafafa;
+      gap: 0.15rem;
     }
-
-    .text-slide {
-      min-width: 400px;
-      max-width: 450px;
-      flex-shrink: 0;
-      opacity: 1;
-      transition: opacity 0.6s ease;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      text-align: left;
+    .slide-item.active {
+      opacity:1; pointer-events:auto; position:relative;
     }
-    .secondary-title {
-      font-size: 1.5rem;
-      font-weight: 700;
-      color: #a0f7a1;
-      margin-bottom: 0.8rem;
+    .slide-item h3 {
+      font-size:2.4rem;
+      font-weight:900;
+      color:#a0f7a1;
+      margin:0;
+      text-transform:uppercase;
+      line-height: 1.1;
     }
-    #main-title-slide {
-      font-size: 2rem;
-      margin-bottom: 1rem;
-      font-weight: 800;
-      color: #fff;
+    .slide-item h4 {
+      font-size:1.6rem;
+      font-weight:700;
+      color:#fff;
+      margin:0;
+      text-transform:uppercase;
+      line-height: 1.15;
     }
-    .desc-text {
-      font-size: 1.1rem;
-      line-height: 1.5;
-      color: #ccc;
-      font-weight: 500;
-    }
-
-    .image-slide {
-      min-width: 320px;
-      flex-shrink: 0;
-      opacity: 1;
-      transition: opacity 0.6s ease;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 260px;
-      background: transparent;
-      border: none;
-      box-shadow: none;
-      color: #a0f7a1;
+    .slide-item p {
       font-style: italic;
+      font-size:1.1rem;
+      color:#ccc;
+      max-width:380px;
+      line-height:1.4;
+      margin: 0;
+    }
+    #slide-img {
+      width:100%; height:100%;
+      object-fit:cover;
+      transition:opacity .6s ease;
+      opacity:1;
+      border-radius: 8px;
+      box-shadow: 0 0 20px #0008 inset;
+    }
+    #slide-img.fade-out {opacity:0;}
+
+    button.arrow-btn {
+      background:none; border:none; font-size:3rem;
+      color:#fafafa; cursor:pointer; width:48px; height:48px;
+      transition:transform .3s,color .3s;
+      user-select:none;
+    }
+    button.arrow-btn:hover {
+      color:#a0f7a1; transform:scale(1.2) translateY(-4px);
     }
 
-    @media (max-width: 800px) {
-      #core-tech-section {
-        max-width: 95vw;
-        padding: 0 1rem 3rem;
+    #dots-container {
+      margin-top:0.8rem;
+      display:flex; justify-content:center; gap:0.4rem;
+    }
+    .dot {
+      width:12px; height:12px; border-radius:50%;
+      background:#666;
+      opacity:0.3;
+      transition:opacity .3s ease, transform .3s ease;
+      outline:none;
+    }
+    .dot.active{
+      background:#a0f7a1;
+      opacity:1;
+      transform:scale(1.3);
+    }
+    .dot.near-active{
+      opacity:0.6;
+      transform:scale(1.1);
+    }
+    .dot.far-active{
+      opacity:0.3;
+      transform:scale(1);
+    }
+
+    #taskbar {
+      position:fixed; top:0; left:0; right:0;
+      background:#111;
+      display:flex;
+      justify-content:center; gap:3rem;
+      padding:1rem 0;
+      z-index:1000;
+      user-select:none;
+      font-weight:700;
+      font-size:1.2rem;
+    }
+    #taskbar button {
+      background:none; border:none;
+      color:#fafafa;
+      cursor:pointer;
+      padding:.25rem 0;
+      border-bottom:3px solid transparent;
+      transition:color .3s, border-color .3s;
+      font-family: cursive;
+    }
+    #taskbar button.active {
+      color:#a0f7a1;
+      border-bottom-color:#a0f7a1;
+      outline-offset:4px;
+    }
+    #taskbar button:hover,
+    #taskbar button:focus-visible {
+      color:#a0f7a1;
+      outline-offset:4px;
+    }
+
+    @media (max-width:900px) {
+      .tech-grid {
+        grid-template-columns:repeat(2,1fr);
       }
-      #core-tech-section h2 {
-        font-size: 2.8rem;
-        margin-bottom: 2rem;
+      #slide-container, #slide-image-container {
+        width:90vw;
+        height:220px;
       }
-      #header-section h1 {
-        font-size: 4rem;
-      }
-      #header-section p {
-        font-size: 1.2rem;
-        max-width: 90vw;
-      }
-      #core-tech-section .tech-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 1.5rem 1rem;
-      }
-      #env-section {
-        max-width: 95vw;
-        padding: 1.5rem 1rem 2rem;
-        margin: 3rem auto 4rem;
-      }
-      #slider-container {
+      .slides-wrapper {
         flex-direction: column;
-        align-items: center;
+        gap: 1.5rem;
       }
-      .arrow-btn {
-        font-size: 2rem;
-        padding: 0 8px;
-        margin: 1rem 0;
-      }
-      #slide-content {
-        width: 100%;
-        overflow: visible;
-        justify-content: center;
-        min-height: auto;
-      }
-      .text-slide {
-        max-width: 90vw;
-        min-width: auto;
-        text-align: left;
-        opacity: 1 !important;
-        transition: none !important;
-      }
-      .image-slide {
-        min-width: 90vw;
-        height: 200px;
-        margin: 1rem 0 0;
+    }
+    @media (max-width:480px) {
+      .tech-grid {
+        grid-template-columns:1fr;
       }
     }
   </style>
 </head>
 <body>
-  <!-- Header -->
-  <section id="header-section" class="fade-section">
+
+  <div id="taskbar">
+    <button data-target="header-section" class="active">Overview</button>
+    <button data-target="core-tech-section">Technologies</button>
+    <button data-target="env-section">Advantages</button>
+  </div>
+
+  <section id="header-section" class="focused">
     <h1>EcoBox</h1>
-    <p>Innovation in smart climate control, sustainable hydration, and efficient environmental monitoring.</p>
+    <p>Smart climate control and sustainable watering—all in one eco‑friendly box.</p>
   </section>
 
-  <!-- Core Technologies -->
-  <section id="core-tech-section" class="fade-section">
+  <section id="core-tech-section">
     <h2>Core Technologies</h2>
     <div class="tech-grid">
       <div class="tech-box">
         <div class="tech-title">ESP32</div>
-        <div class="tech-desc">The powerful brain running all smart controls with ultra-efficient processing.</div>
+        <div>Dual-core powerhouse with Wi-Fi & Bluetooth — handles all smart controls like a boss.</div>
       </div>
       <div class="tech-box">
         <div class="tech-title">Arduino Uno</div>
-        <div class="tech-desc">Reliable microcontroller handling sensor data and device management.</div>
+        <div>Reliable microcontroller that keeps sensors and devices perfectly coordinated.</div>
       </div>
       <div class="tech-box">
         <div class="tech-title">DHT11 Sensor</div>
-        <div class="tech-desc">Measures temperature and humidity for precise climate monitoring.</div>
+        <div>Quick and accurate temperature & humidity readings for precise climate control.</div>
       </div>
       <div class="tech-box">
         <div class="tech-title">Soil Moisture Sensor</div>
-        <div class="tech-desc">Detects soil hydration to prevent overwatering and conserve water.</div>
+        <div>Senses ground hydration to save water and boost plant health.</div>
       </div>
       <div class="tech-box">
         <div class="tech-title">Fan</div>
-        <div class="tech-desc">Circulates air to maintain optimal temperature and humidity levels.</div>
+        <div>Keeps airflow steady, cooling components and environment efficiently.</div>
       </div>
       <div class="tech-box">
         <div class="tech-title">Water Pump</div>
-        <div class="tech-desc">Delivers precise irrigation controlled by moisture readings.</div>
+        <div>Delivers fast and precise irrigation exactly when needed.</div>
       </div>
     </div>
   </section>
 
-  <!-- Environmental Advantages -->
-  <section id="env-section" class="fade-section">
-    <div id="slider-container">
-      <button class="arrow-btn" id="prev-btn">&lt;</button>
-      <div id="slide-content">
-        <div class="text-slide" id="text-slide">
-          <h3 class="secondary-title" id="secondary-title"></h3>
-          <h2 id="main-title-slide"></h2>
-          <p class="desc-text" id="desc-text"></p>
+  <section id="env-section">
+    <div class="slides-wrapper" aria-label="Advantages slider">
+      <button class="arrow-btn" id="btn-left" aria-label="Previous slide">&lt;</button>
+
+      <div id="slide-container" aria-live="polite" aria-atomic="true">
+        <div id="slide-wrapper">
+          <div class="slide-item active" role="group" aria-roledescription="slide" aria-label="Sustainable slide">
+            <h3>Sustainable</h3><h4>Eco‑friendly</h4>
+            <p>Uses energy‑saving hardware and smart watering to reduce environmental impact.</p>
+          </div>
+          <div class="slide-item" role="group" aria-roledescription="slide" aria-label="Automated slide">
+            <h3>Automated</h3><h4>Smart Control</h4>
+            <p>Adjusts environment and irrigation based on real‑time sensor data for hands‑free operation.</p>
+          </div>
+          <div class="slide-item" role="group" aria-roledescription="slide" aria-label="Efficient slide">
+            <h3>Efficient</h3><h4>Resource Saver</h4>
+            <p>Precision monitoring prevents over‑watering and energy waste while optimizing plant health.</p>
+          </div>
+          <div class="slide-item" role="group" aria-roledescription="slide" aria-label="Reliable slide">
+            <h3>Reliable</h3><h4>Consistent</h4>
+            <p>Built with durable components that deliver long–term stable performance without hiccups.</p>
+          </div>
+          <div class="slide-item" role="group" aria-roledescription="slide" aria-label="Innovative slide">
+            <h3>Innovative</h3><h4>Cutting Edge</h4>
+            <p>Integrates modern IoT sensors and logical control systems for advanced automation.</p>
+          </div>
         </div>
-        <div class="image-slide" id="image-slide">Image placeholder</div>
       </div>
-      <button class="arrow-btn" id="next-btn">&gt;</button>
+
+      <div id="slide-image-container">
+        <img id="slide-img"
+          src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80"
+          alt="Eco friendly panel" />
+      </div>
+
+      <button class="arrow-btn" id="btn-right" aria-label="Next slide">&gt;</button>
+    </div>
+
+    <div id="dots-container" role="tablist" aria-label="Slide navigation">
+      <button class="dot active" role="tab" aria-selected="true" tabindex="0" aria-controls="slide1"></button>
+      <button class="dot" role="tab" aria-selected="false" tabindex="-1" aria-controls="slide2"></button>
+      <button class="dot" role="tab" aria-selected="false" tabindex="-1" aria-controls="slide3"></button>
+      <button class="dot" role="tab" aria-selected="false" tabindex="-1" aria-controls="slide4"></button>
+      <button class="dot" role="tab" aria-selected="false" tabindex="-1" aria-controls="slide5"></button>
     </div>
   </section>
 
-  <script>
-    const fadeSections = document.querySelectorAll('.fade-section');
-    const fadeObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) entry.target.classList.add('visible');
-        else entry.target.classList.remove('visible');
-      });
-    }, { threshold: 0.2 });
-    fadeSections.forEach(section => fadeObserver.observe(section));
+<script>
+  const slides = [...document.querySelectorAll('.slide-item')];
+  const dots = [...document.querySelectorAll('.dot')];
+  const img = document.getElementById('slide-img');
+  const btnL = document.getElementById('btn-left');
+  const btnR = document.getElementById('btn-right');
+  const slideImages = [
+    'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80',
+    'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=400&q=80',
+    'https://images.unsplash.com/photo-1501594907352-04cda38ebc29?auto=format&fit=crop&w=400&q=80',
+    'https://images.unsplash.com/photo-1497493292307-31c376b6e479?auto=format&fit=crop&w=400&q=80',
+    'https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=400&q=80'
+  ];
+  let current = 0;
+  let isTransitioning = false;
 
-    const advantages = [
-      { secondaryTitle: "Ultra-Efficient Power", title: "Powerful ESP32", desc: "The ESP32’s ultra-efficient dual-core processor delivers blazing performance while reducing power consumption — perfect for 24/7 smart climate control." },
-      { secondaryTitle: "Intelligent Hydration", title: "Smart Water Saving", desc: "EcoBox’s soil moisture sensor activates irrigation only when necessary, preventing waste and promoting sustainable water use." },
-      { secondaryTitle: "Precision Comfort", title: "Optimal Climate Control", desc: "Precision temperature and humidity sensing lets EcoBox maintain ideal conditions, improving plant health and comfort." },
-      { secondaryTitle: "Set & Forget", title: "Fully Autonomous", desc: "Set it once and EcoBox runs automatically, adjusting in real-time without needing manual input." },
-      { secondaryTitle: "Green Tech", title: "Low Carbon Impact", desc: "EcoBox’s optimized hardware and software reduce electricity demand, helping lower your environmental footprint." }
-    ];
+  function fadeOutIn(index, userTriggered = false) {
+    if(isTransitioning) return;
+    isTransitioning = true;
 
-    const secondaryTitleEl = document.getElementById("secondary-title");
-    const mainTitleEl = document.getElementById("main-title-slide");
-    const descEl = document.getElementById("desc-text");
-    const textSlideEl = document.getElementById("text-slide");
-    const imageSlideEl = document.getElementById("image-slide");
-    const prevBtn = document.getElementById("prev-btn");
-    const nextBtn = document.getElementById("next-btn");
-    let currentIndex = 0;
-    let isAnimating = false;
-    let autoSlideTimeout;
-
-    function fadeOutElements() {
-      return new Promise(resolve => {
-        textSlideEl.style.opacity = "0";
-        imageSlideEl.style.opacity = "0";
-        setTimeout(resolve, 600);
-      });
-    }
-    function fadeInElements() {
-      textSlideEl.style.opacity = "1";
-      imageSlideEl.style.opacity = "1";
-    }
-    function updateContent(index) {
-      secondaryTitleEl.textContent = advantages[index].secondaryTitle;
-      mainTitleEl.textContent = advantages[index].title;
-      descEl.textContent = advantages[index].desc;
-    }
-    async function changeSlide(newIndex) {
-      if (isAnimating) return;
-      isAnimating = true;
-      clearTimeout(autoSlideTimeout);
-      await fadeOutElements();
-      updateContent(newIndex);
-      fadeInElements();
-      currentIndex = newIndex;
-      autoSlideTimeout = setTimeout(() => {
-        changeSlide((currentIndex + 1) % advantages.length);
-      }, 10000);
-      setTimeout(() => { isAnimating = false; }, 650);
-    }
-    prevBtn.addEventListener("click", () => {
-      let newIndex = (currentIndex - 1 + advantages.length) % advantages.length;
-      changeSlide(newIndex);
+    slides.forEach((s, i) => {
+      if(i === current) s.classList.remove('active');
     });
-    nextBtn.addEventListener("click", () => {
-      let newIndex = (currentIndex + 1) % advantages.length;
-      changeSlide(newIndex);
+    img.classList.add('fade-out');
+
+    setTimeout(() => {
+      img.src = slideImages[index];
+      slides.forEach((s, i) => {
+        s.classList.toggle('active', i === index);
+      });
+
+      dots.forEach((d, i) => {
+        d.classList.remove('active','near-active','far-active');
+        d.setAttribute('aria-selected', 'false');
+        d.setAttribute('tabindex', '-1');
+        if (i === index) {
+          d.classList.add('active');
+          d.setAttribute('aria-selected', 'true');
+          d.setAttribute('tabindex', '0');
+          if(userTriggered) d.focus();
+        } else if (i === (index - 1 + slides.length) % slides.length || i === (index + 1) % slides.length) {
+          d.classList.add('near-active');
+        } else {
+          d.classList.add('far-active');
+        }
+      });
+
+      img.classList.remove('fade-out');
+      current = index;
+      isTransitioning = false;
+    }, 600);
+  }
+
+  btnL.onclick = () => fadeOutIn((current - 1 + slides.length) % slides.length, true);
+  btnR.onclick = () => fadeOutIn((current + 1) % slides.length, true);
+  dots.forEach((d, i) => d.onclick = () => fadeOutIn(i, true));
+  setInterval(() => fadeOutIn((current + 1) % slides.length, false), 7000);
+
+  const buttons = document.querySelectorAll('#taskbar button');
+  const sections = [...document.querySelectorAll('section')];
+
+  window.onscroll = () => {
+    const y = window
+.scrollY + window.innerHeight / 3;
+    sections.forEach((s, i) => {
+      const inView = y >= s.offsetTop && y < s.offsetTop + s.offsetHeight;
+      s.classList.toggle('focused', inView);
+      buttons[i].classList.toggle('active', inView);
     });
-    updateContent(currentIndex);
-    fadeInElements();
-    autoSlideTimeout = setTimeout(() => {
-      changeSlide((currentIndex + 1) % advantages.length);
-    }, 10000);
-  </script>
+  };
+
+  buttons.forEach(btn => {
+    btn.onclick = () => {
+      document.getElementById(btn.dataset.target).scrollIntoView({behavior: 'smooth'});
+    };
+  });
+</script>
+
 </body>
 </html>
