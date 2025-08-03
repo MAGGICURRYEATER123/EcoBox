@@ -884,11 +884,46 @@ iframe {
 </script>
 
 </body>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const descriptions = [
+      "Innovating Sustainable Living Solutions.",
+      "Smart Climate Control Systems at Your Fingertips.",
+      "Seamless IoT Integration for Eco Efficiency.",
+      "Real-Time Environmental Monitoring Technologies.",
+      "Energy-Efficient Designs for Future Homes.",
+      "Precision Sensor Technology Embedded.",
+      "Adaptive Water Management Innovations.",
+      "User-Friendly Digital Interface Experience.",
+      "Cutting-Edge 3D Visualization Showcase.",
+      "Future-Ready EcoBox Design Unveiled."
+    ];
+    
+    const descEl = document.querySelector('.description');
+    let descIndex = 0;
+    
+    function changeDescription() {
+      descEl.style.opacity = '0';
+      setTimeout(() => {
+        descEl.textContent = descriptions[descIndex];
+        descEl.style.opacity = '1';
+        descIndex = (descIndex + 1) % descriptions.length;
+      }, 600);
+    }
+    
+    // Initialize first description
+    descEl.textContent = descriptions[descIndex];
+    descIndex++;
+    
+    // Change description every 3 seconds
+    setInterval(changeDescription, 3000);
+  });
+</script>
+
 <div class="title-container" aria-label="EcoBox 3D model title and description">
   <h2>Presenting: EcoBox 3D Experience</h2>
-  <div class="description" aria-live="polite" aria-atomic="true"></div>
+  <div class="description" aria-live="polite" aria-atomic="true" style="color:#a0f7a1; font-style: italic; font-weight: 500; margin-top: 5px;"></div>
 </div>
-
 
 <div class="model-container" aria-label="3D model of EcoBox greenhouse">
   <iframe 
