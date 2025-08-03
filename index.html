@@ -5,6 +5,143 @@
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
   <title>EcoBox Project</title>
   <style>
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap');
+
+html, body {
+  /* You probably already have some of these, just merge or override carefully */
+  font-family: 'Orbitron', 'Segoe UI', sans-serif;
+  color: #fff;
+  overflow-x: hidden;
+  background: #0b0b0b; /* If your page background is different, decide which to keep */
+}
+
+.title-container {
+  width: 100%;
+  max-width: 1200px;
+  text-align: center;
+  margin-bottom: 1.2rem;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  will-change: transform, opacity;
+}
+
+h2 {
+  font-size: 2.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #fff;
+  margin: 0 0 0.3rem 0;
+  letter-spacing: 0.1em;
+  text-shadow:
+    0 0 8px rgba(255,255,255,0.7),
+    0 0 15px rgba(255,255,255,0.5);
+  animation: pulseGlow 2.5s ease-in-out infinite;
+  transition: transform 0.3s ease;
+  will-change: transform;
+}
+
+.description {
+  font-size: 1.3rem;
+  font-style: italic;
+  font-weight: 500;
+  color: #a0f7a1;
+  min-height: 2.2rem; /* enough for one line */
+  letter-spacing: 0.05em;
+  transition: opacity 0.6s ease;
+  user-select: none;
+  margin-top: 0.3rem;
+}
+
+
+@keyframes pulseGlow {
+  0%, 100% {
+    text-shadow:
+      0 0 8px rgba(255,255,255,0.7),
+      0 0 15px rgba(255,255,255,0.5);
+    color: #fff;
+  }
+  50% {
+    text-shadow:
+      0 0 15px rgba(255,255,255,1),
+      0 0 30px rgba(255,255,255,0.8);
+    color: #eee;
+  }
+}
+
+.description {
+  font-size: 1.3rem;
+  font-style: italic;
+  font-weight: 500;
+  color: #a0f7a1;
+  min-height: 2.2rem; /* enough for one line */
+  letter-spacing: 0.05em;
+  transition: opacity 0.6s ease;
+  user-select: none;
+}
+
+.model-container {
+  position: relative;
+  width: 100%;
+  max-width: 1200px;
+  aspect-ratio: 16 / 9;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #000;
+  border: 2px solid transparent;
+  box-shadow:
+    0 0 8px #fff,
+    0 0 20px #fff,
+    0 0 40px #fff;
+  animation: neonGlow 4s linear infinite;
+  user-select: none;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  will-change: transform, opacity;
+}
+
+@keyframes neonGlow {
+  0% {
+    box-shadow:
+      0 0 8px #fff,
+      0 0 20px #fff,
+      0 0 40px #fff;
+  }
+  50% {
+    box-shadow:
+      0 0 15px #fff,
+      0 0 30px #fff,
+      0 0 60px #fff;
+  }
+  100% {
+    box-shadow:
+      0 0 8px #fff,
+      0 0 20px #fff,
+      0 0 40px #fff;
+  }
+}
+
+iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  background: #000;
+  border-radius: 12px;
+  display: block;
+  position: relative;
+  user-select: none;
+}
+
+@media (max-width: 900px) {
+  h2 {
+    font-size: 2rem;
+  }
+  .description {
+    font-size: 1rem;
+  }
+  .model-container {
+    aspect-ratio: 16 / 9;
+    max-width: 100%;
+  }
+}
+
     body {
       margin:0; padding:0;
       font-family:cursive,'Segoe UI',sans-serif;
@@ -13,26 +150,51 @@
       color:#fafafa;
       scroll-behavior:smooth;
     }
+
     section {
-      scroll-margin-top:70px;
-      padding-top:6rem;
-      padding-bottom:8rem;
-      max-width:1100px; margin:0 auto;
+      scroll-margin-top: 70px;
+      padding-top: 6rem;
+      padding-bottom: 8rem;
+      max-width: 1100px;
+      margin: 0 auto;
+
+      /* Advanced fade/blur/slide transition effects */
+      transition: filter 0.6s ease, opacity 0.6s ease, transform 0.6s ease, background-color 0.6s ease;
+      filter: blur(0.4px);
+      opacity: 0.6;
+      /* pointer-events changed to allow click even when blurred */
+      pointer-events: auto;
+      will-change: filter, opacity, transform, background-color;
+      transform: none;
+      background-color: transparent;
     }
+
+    /* Focused general styles */
+    section.focused {
+      filter: blur(0);
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    /* Header Section - slight upward slide */
     #header-section {
-      transform-origin:center top;
-      transition:transform .7s ease;
-      transform:scale(.94);
+      transform-origin: center top;
+      transform: translateY(10px);
+      transition: transform 0.6s ease;
       text-align:center;
       padding:5rem 1rem 4rem;
       color: #fafafa;
     }
-    #header-section.focused{transform:scale(1);}
+    #header-section.focused {
+      transform: translateY(0);
+    }
     #header-section h1{
       font-size:5rem;
       font-weight:900;
       margin-bottom:.5rem;
       color: #fafafa;
+      animation: zoomInOut 6s infinite;
+      /* Zoom in/out animation applied */
     }
     #header-section p{
       font-style:italic;
@@ -40,16 +202,30 @@
       color:#ddd;
     }
 
+    @keyframes zoomInOut {
+      0%, 100% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.1);
+      }
+    }
+
+    /* Core Tech Section - fade and slide in from left */
     #core-tech-section {
-      transform-origin:center top;
-      transition:transform .7s ease;
-      transform:scale(1);
+      transform-origin: center top;
+      transform: translateX(-20px);
+      opacity: 0.8;
+      transition: transform 0.6s ease, opacity 0.6s ease;
       text-align:center;
       padding:0 1.5rem;
       margin-bottom:6rem;
       color: #fafafa;
     }
-    #core-tech-section:not(.focused){transform:scale(.92);}
+    #core-tech-section.focused {
+      transform: translateX(0);
+      opacity: 1;
+    }
     #core-tech-section h2 {
       font-size:3rem;
       margin-bottom:3rem;
@@ -87,9 +263,18 @@
       color:#a0f7a1;
     }
 
+    /* Env Section - fade and slide in from right */
     #env-section {
+      transform-origin: center top;
+      transform: translateX(20px);
+      opacity: 0.8;
+      transition: transform 0.6s ease, opacity 0.6s ease;
       margin-top:5rem;
       color: #fafafa;
+    }
+    #env-section.focused {
+      transform: translateX(0);
+      opacity: 1;
     }
 
     .slides-wrapper {
@@ -171,6 +356,7 @@
       opacity:0.3;
       transition:opacity .3s ease, transform .3s ease;
       outline:none;
+      cursor:pointer;
     }
     .dot.active{
       background:#a0f7a1;
@@ -204,7 +390,14 @@
       padding:.25rem 0;
       border-bottom:3px solid transparent;
       transition:color .3s, border-color .3s;
-      font-family: cursive;
+      font-family: cursive, 'Segoe UI', sans-serif;
+      font-weight: 700;
+      font-size: 1.2rem;
+      line-height: 1.3;
+      white-space: nowrap;
+      min-width: 90px;
+      box-sizing: border-box;
+      text-transform: none;
     }
     #taskbar button.active {
       color:#a0f7a1;
@@ -217,110 +410,6 @@
       outline-offset:4px;
     }
 
-    /* ====== MUST KNOW HIGHLIGHTS SECTION ====== */
-    #highlights-section {
-      margin-top: 3rem; /* closer to slides */
-      color:#fafafa;
-      position:relative;
-      padding-top: 5rem;
-      padding-bottom: 6rem;
-      text-align: center;
-      overflow: visible;
-    }
-    #highlights-section h2 {
-      font-size: 4.5rem;
-      font-weight: 900;
-      color: #fff;
-      text-transform: uppercase;
-      margin-bottom: 4rem;
-      position: relative;
-      user-select:none;
-      letter-spacing: 0.15em;
-    }
-    /* Mirror text floor effect */
-    #highlights-section h2::after {
-      content: attr(data-text);
-      position: absolute;
-      left: 0; right: 0;
-      bottom: -1.2em;
-      color: #fff;
-      opacity: 0.15;
-      transform: scaleY(-1);
-      filter: blur(3px);
-      z-index: -1;
-      letter-spacing: 0.15em;
-    }
-
-    .highlight-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 2.8rem 4rem;
-      max-width: 1000px;
-      margin: 0 auto;
-    }
-    .highlight-box {
-      position: relative;
-      background: #1a1a1a;
-      border-radius: 12px;
-      overflow: hidden;
-      box-shadow: 0 0 20px #5a7f9daa inset;
-      display: flex;
-      align-items: center;
-      padding: 2rem 4rem;
-      min-height: 90px;
-      cursor: default;
-      border: 1.5px solid transparent;
-      transition: border-color 0.7s ease;
-      max-width: 900px;
-      margin: 0 auto;
-      /* subtle neon glow from left */
-      box-shadow:
-        inset 30px 0 60px 3px #bde7ff88,
-        inset 0 0 20px 3px #a0f7a1cc;
-    }
-
-    .highlight-title {
-      flex: 1;
-      font-weight: 900;
-      font-size: 1.7rem;
-      color: #a0f7a1;
-      text-align: left;
-      z-index: 1;
-      user-select:none;
-      min-width: 140px;
-      max-width: 220px;
-      padding-right: 2rem;
-    }
-    .highlight-desc {
-      flex: 3;
-      font-size: 1.15rem;
-      line-height: 1.3;
-      color: #fff;
-      text-align: right;
-      z-index: 1;
-      user-select:none;
-      max-width: 700px;
-      display: -webkit-box;
-      -webkit-line-clamp: 3;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
-    }
-
-    /* Background blur overlay */
-    .highlight-box::before {
-      content: "";
-      position: absolute;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background-image: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=60');
-      background-size: cover;
-      background-position: center;
-      filter: blur(10px) brightness(0.2);
-      opacity: 0.5;
-      z-index: 0;
-      border-radius: 12px;
-    }
-
-    /* Responsive */
     @media (max-width:900px) {
       .tech-grid {
         grid-template-columns:repeat(2,1fr);
@@ -333,28 +422,200 @@
         flex-direction: column;
         gap: 1.5rem;
       }
-      .highlight-grid {
-        grid-template-columns: 1fr;
-        gap: 2rem 0;
-      }
-      .highlight-box {
-        padding: 1.5rem 2.5rem;
-      }
-      .highlight-title {
-        padding-right: 1rem;
-        font-size: 1.5rem;
-        min-width: auto;
-        max-width: none;
-      }
-      .highlight-desc {
-        font-size: 1rem;
-        max-width: none;
-        text-align: left;
-      }
     }
     @media (max-width:480px) {
       .tech-grid {
         grid-template-columns:1fr;
+      }
+    }
+
+
+    /* === Must Know Highlights Section === */
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@900&display=swap');
+
+    #highlights-section {
+      transition: filter 0.6s ease, opacity 0.6s ease, background-color 0.6s ease;
+      background-color: rgba(255 255 255 / 0.03);
+      filter: blur(0.4px);
+      opacity: 0.7;
+      margin-top: 3rem;
+      padding: 5rem 2rem 6rem;
+      max-width: 100vw;
+      width: 100%;
+      box-sizing: border-box;
+      color: #fff;
+      pointer-events: auto; /* Allow clicks even when blurred */
+    }
+    #highlights-section.focused {
+      background-color: rgba(255 255 255 / 0.08);
+      filter: blur(0);
+      opacity: 1;
+    }
+
+    #highlights-section h2 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 3.4rem;
+      font-weight: 900;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      text-align: center;
+      margin-bottom: 4rem;
+      color: #fff;
+      position: relative;
+      user-select: none;
+      z-index: 1;
+    }
+
+    /* Slightly clearer and less blurry reflection */
+    #highlights-section h2::after {
+      content: attr(data-text);
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: -3.4rem;
+      font-size: 3.4rem;
+      font-weight: 900;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.25);
+      transform: scaleY(-1);
+      filter: blur(2.5px);
+      opacity: 0.65;
+      pointer-events: none;
+      user-select: none;
+      z-index: -1;
+      background: linear-gradient(to bottom, rgba(255,255,255,0.3), transparent);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .highlight-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2.5rem 2rem;
+      max-width: 1100px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .highlight-box {
+      position: relative;
+      border-radius: 12px;
+      overflow: hidden;
+      cursor: default;
+      padding: 2rem 2.5rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      background: linear-gradient(135deg, #111, #1a1a1a);
+      box-shadow: inset 0 0 30px rgba(100, 100, 100, 0.25);
+      transition: none;
+      pointer-events: auto; /* Ensure clickable */
+    }
+
+    /* Brighter and longer static white neon strip outside box */
+    .highlight-box::before {
+      content: "";
+      position: absolute;
+      top: -12px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80%;
+      height: 6px;
+      border-radius: 4px;
+      background: white;
+      box-shadow:
+        0 0 25px rgba(255, 255, 255, 1),
+        0 0 50px rgba(255, 255, 255, 0.7);
+      z-index: 10;
+      pointer-events: none;
+    }
+
+    .highlight-title {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 900;
+      font-size: 1.7rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: #fff;
+      text-shadow:
+        0 0 6px rgba(255, 255, 255, 0.4),
+        0 0 10px rgba(255, 255, 255, 0.25);
+      margin-bottom: 0.75rem;
+      user-select: none;
+      pointer-events: none;
+    }
+
+    .highlight-desc {
+      font-style: italic;
+      font-weight: 400;
+      font-size: 1.1rem;
+      line-height: 1.5;
+      color: #eee;
+      text-shadow:
+        0 0 4px rgba(255, 255, 255, 0.15);
+      user-select: none;
+      pointer-events: none;
+    }
+
+    .highlight-box::after {
+      content: "";
+      position: absolute;
+      top: -50%;
+      left: -70%;
+      width: 90%;
+      height: 200%;
+      background:
+        radial-gradient(ellipse 65% 45% at 70% 40%, rgba(255, 255, 255, 0.25), transparent 75%);
+      transform: rotate(-25deg);
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      z-index: 3;
+      mix-blend-mode: screen;
+      filter: blur(7px);
+    }
+
+    .highlight-box:hover::after,
+    .highlight-box:focus-visible::after {
+      opacity: 0.7;
+      animation: gloss-slide-moon 2.5s ease forwards;
+    }
+
+    @keyframes gloss-slide-moon {
+      0% { left: -70%; }
+      100% { left: 140%; }
+    }
+
+    @media (max-width: 900px) {
+      .highlight-grid {
+        grid-template-columns: 1fr;
+        max-width: 90vw;
+        gap: 2rem 1rem;
+      }
+      section#highlights-section {
+        padding: 3rem 1rem 4rem;
+      }
+      .highlight-box {
+        padding: 1.5rem 1.8rem;
+      }
+      .highlight-title {
+        font-size: 1.4rem;
+      }
+      .highlight-desc {
+        font-size: 1.05rem;
+      }
+      #highlights-section h2 {
+        font-size: 2.6rem;
+        margin-bottom: 2rem;
+      }
+      #highlights-section h2::after {
+        bottom: -2.6rem;
+        font-size: 2.6rem;
+      }
+      .highlight-box::before {
+        width: 80%;
+        height: 4px;
       }
     }
   </style>
@@ -365,7 +626,8 @@
     <button data-target="header-section" class="active">Overview</button>
     <button data-target="core-tech-section">Technologies</button>
     <button data-target="env-section">Advantages</button>
-    <button data-target="highlights-section">Highlights</button>
+    <button data-target="highlights-section">Must Know</button>
+    <button data-target="3d-model-section">3D Model</button>
   </div>
 
   <section id="header-section" class="focused">
@@ -411,143 +673,235 @@
         <div id="slide-wrapper">
           <div class="slide-item active" role="group" aria-roledescription="slide" aria-label="Sustainable slide">
             <h3>Sustainable</h3><h4>Eco‑friendly</h4>
-            <p>Uses energy‑saving hardware and smart watering to reduce environmental impact.</p>
+            <p>Employs cutting-edge energy-efficient components and precision watering to minimize ecological footprint.</p>
           </div>
-          <div class="slide-item" role="group" aria-roledescription="slide" aria-label="Automated slide">
-            <h3>Automated</h3><h4>Smart Control</h4>
-            <p>Adjusts environment and irrigation based on real‑time sensor data for hands‑free operation.</p>
+          <div class="slide-item" role="group" aria-roledescription="slide" aria-label="Automation slide">
+            <h3>Automation</h3><h4>Smart Control</h4>
+            <p>Automates climate and water management with real-time sensor feedback and app control.</p>
           </div>
-          <div class="slide-item" role="group" aria-roledescription="slide" aria-label="Efficient slide">
-            <h3>Efficient</h3><h4>Resource Saver</h4>
-            <p>Precision monitoring prevents over‑watering and energy waste while optimizing plant health.</p>
+          <div class="slide-item" role="group" aria-roledescription="slide" aria-label="Connectivity slide">
+            <h3>Connectivity</h3><h4>Wireless</h4>
+            <p>Seamlessly integrates with mobile apps for remote monitoring and management.</p>
           </div>
-          <div class="slide-item" role="group" aria-roledescription="slide" aria-label="Reliable slide">
-            <h3>Reliable</h3><h4>Consistent</h4>
-            <p>Built with durable components that deliver long–term stable performance without hiccups.</p>
+          <div class="slide-item" role="group" aria-roledescription="slide" aria-label="Water Management slide">
+            <h3>Water Management</h3><h4>Efficiency</h4>
+            <p>Optimizes irrigation cycles based on soil moisture and weather data.</p>
           </div>
-          <div class="slide-item" role="group" aria-roledescription="slide" aria-label="Innovative slide">
-            <h3>Innovative</h3><h4>Cutting Edge</h4>
-            <p>Integrates modern IoT sensors and logical control systems for advanced automation.</p>
+          <div class="slide-item" role="group" aria-roledescription="slide" aria-label="Modular slide">
+            <h3>Modular</h3><h4>Expandable Design</h4>
+            <p>Designed with adaptable architecture supporting multiple sensor types and scalable configurations.</p>
           </div>
         </div>
       </div>
 
       <div id="slide-image-container">
-        <img id="slide-img"
-          src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80"
-          alt="Eco friendly panel" />
+        <img src="https://cdn.openai.com/eco-box-placeholder.jpg" alt="EcoBox device example" id="slide-img" />
       </div>
 
       <button class="arrow-btn" id="btn-right" aria-label="Next slide">&gt;</button>
     </div>
-
-    <div id="dots-container" role="tablist" aria-label="Slide navigation">
-      <button class="dot active" role="tab" aria-selected="true" tabindex="0" aria-controls="slide1"></button>
-      <button class="dot" role="tab" aria-selected="false" tabindex="-1" aria-controls="slide2"></button>
-      <button class="dot" role="tab" aria-selected="false" tabindex="-1" aria-controls="slide3"></button>
-      <button class="dot" role="tab" aria-selected="false" tabindex="-1" aria-controls="slide4"></button>
-      <button class="dot" role="tab" aria-selected="false" tabindex="-1" aria-controls="slide5"></button>
+    <div id="dots-container" role="tablist" aria-label="Slide navigation dots">
+      <button class="dot active" aria-selected="true" role="tab" tabindex="0"></button>
+      <button class="dot" aria-selected="false" role="tab" tabindex="-1"></button>
+      <button class="dot" aria-selected="false" role="tab" tabindex="-1"></button>
+      <button class="dot" aria-selected="false" role="tab" tabindex="-1"></button>
+      <button class="dot" aria-selected="false" role="tab" tabindex="-1"></button>
     </div>
   </section>
 
-  <section id="highlights-section">
-    <h2 data-text="MUST KNOW HIGHLIGHTS">MUST KNOW HIGHLIGHTS</h2>
+  <section id="highlights-section" tabindex="0" aria-label="Must Know Highlights">
+    <h2 data-text="Must Know Highlights">Must Know Highlights</h2>
     <div class="highlight-grid">
-      <div class="highlight-box">
-        <div class="highlight-title">Structure</div>
-        <div class="highlight-desc">The structure is built with durable PVC sheets designed for greenhouse use, ensuring weather resistance and long-lasting support.</div>
+      <div class="highlight-box" tabindex="0" role="region" aria-labelledby="h1-title">
+        <div id="h1-title" class="highlight-title">Energy Saving</div>
+        <div class="highlight-desc">EcoBox drastically reduces power consumption by smartly managing devices and sensors only when necessary.</div>
       </div>
-      <div class="highlight-box">
-        <div class="highlight-title">Space Optimization</div>
-        <div class="highlight-desc">The layout is carefully planned to fully utilize the available space while maintaining an efficient and aesthetic design.</div>
+      <div class="highlight-box" tabindex="0" role="region" aria-labelledby="h2-title">
+        <div id="h2-title" class="highlight-title">Water Efficiency</div>
+        <div class="highlight-desc">Intelligent soil moisture detection prevents water waste, optimizing irrigation cycles.</div>
       </div>
-      <div class="highlight-box">
-        <div class="highlight-title">Advanced Ventilation</div>
-        <div class="highlight-desc">State-of-the-art ventilation systems ensure consistent airflow and temperature control, enhancing plant growth.</div>
+      <div class="highlight-box" tabindex="0" role="region" aria-labelledby="h3-title">
+        <div id="h3-title" class="highlight-title">Smart Integration</div>
+        <div class="highlight-desc">Seamlessly connects with Blynk app and local sensors to provide real-time monitoring and control.</div>
       </div>
-      <div class="highlight-box">
-        <div class="highlight-title">Smart Irrigation</div>
-        <div class="highlight-desc">Automated watering systems intelligently adjust irrigation based on soil moisture, conserving water and promoting healthy plants.</div>
+      <div class="highlight-box" tabindex="0" role="region" aria-labelledby="h4-title">
+        <div id="h4-title" class="highlight-title">Sustainability Focus</div>
+        <div class="highlight-desc">EcoBox’s design prioritizes environmental impact reduction through sustainable materials and low-energy parts.</div>
       </div>
     </div>
   </section>
+
+  <section id="3d-model-section" style="padding:5rem 1rem; max-width:1100px; margin:0 auto; color:#fafafa;">
 
 <script>
-  const slides = [...document.querySelectorAll('.slide-item')];
-  const dots = [...document.querySelectorAll('.dot')];
-  const img = document.getElementById('slide-img');
-  const btnL = document.getElementById('btn-left');
-  const btnR = document.getElementById('btn-right');
-  const slideImages = [
-    'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80',
-    'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=400&q=80',
-    'https://images.unsplash.com/photo-1501594907352-04cda38ebc29?auto=format&fit=crop&w=400&q=80',
-    'https://images.unsplash.com/photo-1497493292307-31c376b6e479?auto=format&fit=crop&w=400&q=80',
-    'https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=400&q=80'
+  // Taskbar button and scroll-linked focus
+  const buttons = document.querySelectorAll('#taskbar button');
+  const sections = [
+    document.getElementById('header-section'),
+    document.getElementById('core-tech-section'),
+    document.getElementById('env-section'),
+    document.getElementById('highlights-section'),
+    document.getElementById('3d-model-section'),
   ];
-  let current = 0;
-  let isTransitioning = false;
 
-  function fadeOutIn(index, userTriggered = false) {
-    if(isTransitioning) return;
-    isTransitioning = true;
-
-    slides.forEach((s, i) => {
-      if(i === current) s.classList.remove('active');
+  function setActiveButton(index) {
+    buttons.forEach((btn,i) => {
+      btn.classList.toggle('active', i === index);
     });
+  }
+
+  buttons.forEach((btn, idx) => {
+    btn.addEventListener('click', () => {
+      sections[idx].scrollIntoView({behavior: 'smooth', block: 'start'});
+      setActiveButton(idx);
+    });
+  });
+
+  // Scroll detection with IntersectionObserver for section focus and taskbar button highlight
+  const observerOptions = {
+    root: null,
+    rootMargin: '0px 0px -40% 0px',
+    threshold: 0.5,
+  };
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      const index = sections.indexOf(entry.target);
+      if (entry.isIntersecting) {
+        entry.target.classList.add('focused');
+        setActiveButton(index);
+      } else {
+        entry.target.classList.remove('focused');
+      }
+    });
+  }, observerOptions);
+
+  sections.forEach(section => observer.observe(section));
+
+  // === Slide show ===
+  const slides = document.querySelectorAll('.slide-item');
+  const dots = document.querySelectorAll('.dot');
+  const img = document.getElementById('slide-img');
+  const btnLeft = document.getElementById('btn-left');
+  const btnRight = document.getElementById('btn-right');
+
+  // Slide images array (5 slides)
+  const slideImages = [
+    'https://cdn.openai.com/eco-box-placeholder.jpg',
+    'https://cdn.openai.com/eco-box-placeholder2.jpg',
+    'https://cdn.openai.com/eco-box-placeholder3.jpg',
+    'https://cdn.openai.com/eco-box-placeholder4.jpg',
+    'https://cdn.openai.com/eco-box-placeholder5.jpg'
+  ];
+
+  let currentIndex = 0;
+  let imgFadeTimeout = null;
+  let autoSlideInterval = null;
+
+  function setSlide(index) {
+    slides.forEach((slide, i) => {
+      slide.classList.toggle('active', i === index);
+      dots[i].classList.toggle('active', i === index);
+      dots[i].setAttribute('aria-selected', i === index ? 'true' : 'false');
+      dots[i].tabIndex = i === index ? 0 : -1;
+    });
+
+    if (imgFadeTimeout) clearTimeout(imgFadeTimeout);
     img.classList.add('fade-out');
-
-    setTimeout(() => {
-      img.src = slideImages[index];
-      slides.forEach((s, i) => {
-        s.classList.toggle('active', i === index);
-      });
-
-      dots.forEach((d, i) => {
-        d.classList.remove('active','near-active','far-active');
-        d.setAttribute('aria-selected', 'false');
-        d.setAttribute('tabindex', '-1');
-        if (i === index) {
-          d.classList.add('active');
-          d.setAttribute('aria-selected', 'true');
-          d.setAttribute('tabindex', '0');
-          if(userTriggered) d.focus();
-        } else if (i === (index - 1 + slides.length) % slides.length || i === (index + 1) % slides.length) {
-          d.classList.add('near-active');
-        } else {
-          d.classList.add('far-active');
-        }
-      });
-
+    imgFadeTimeout = setTimeout(() => {
+      img.src = slideImages[index] || slideImages[0];
       img.classList.remove('fade-out');
-      current = index;
-      isTransitioning = false;
+    }, 300);
+
+    currentIndex = index;
+  }
+
+  btnLeft.addEventListener('click', () => {
+    let nextIndex = (currentIndex - 1 + slides.length) % slides.length;
+    setSlide(nextIndex);
+    resetAutoSlide();
+  });
+
+  btnRight.addEventListener('click', () => {
+    let nextIndex = (currentIndex + 1) % slides.length;
+    setSlide(nextIndex);
+    resetAutoSlide();
+  });
+
+  dots.forEach((dot, idx) => {
+    dot.addEventListener('click', () => {
+      setSlide(idx);
+      resetAutoSlide();
+    });
+  });
+
+  function autoSlide() {
+    let nextIndex = (currentIndex + 1) % slides.length;
+    setSlide(nextIndex);
+  }
+
+  function resetAutoSlide() {
+    if (autoSlideInterval) clearInterval(autoSlideInterval);
+    autoSlideInterval = setInterval(autoSlide, 5000);
+  }
+
+  // Initialize first slide and auto slide
+  setSlide(0);
+  resetAutoSlide();
+</script>
+<script>
+  const descriptions = [
+    "Innovating Sustainable Living Solutions.",
+    "Smart Climate Control Systems at Your Fingertips.",
+    "Seamless IoT Integration for Eco Efficiency.",
+    "Real-Time Environmental Monitoring Technologies.",
+    "Energy-Efficient Designs for Future Homes.",
+    "Precision Sensor Technology Embedded.",
+    "Adaptive Water Management Innovations.",
+    "User-Friendly Digital Interface Experience.",
+    "Cutting-Edge 3D Visualization Showcase.",
+    "Future-Ready EcoBox Design Unveiled."
+  ];
+
+  const descEl = document.querySelector('.description');
+  let descIndex = 0;
+
+  function changeDescription() {
+    descEl.style.opacity = '0';
+    setTimeout(() => {
+      descEl.textContent = descriptions[descIndex];
+      descEl.style.opacity = '1';
+      descIndex = (descIndex + 1) % descriptions.length;
     }, 600);
   }
 
-  btnL.onclick = () => fadeOutIn((current - 1 + slides.length) % slides.length, true);
-  btnR.onclick = () => fadeOutIn((current + 1) % slides.length, true);
-  dots.forEach((d, i) => d.onclick = () => fadeOutIn(i, true));
-  setInterval(() => fadeOutIn((current + 1) % slides.length, false), 7000);
+  // Initialize first description
+  descEl.textContent = descriptions[descIndex];
+  descIndex++;
 
-  const buttons = document.querySelectorAll('#taskbar button');
-  const sections = [...document.querySelectorAll('section')];
-
-  window.onscroll = () => {
-    const y = window.scrollY + window.innerHeight / 3;
-    sections.forEach((s, i) => {
-      const inView = y >= s.offsetTop && y < s.offsetTop + s.offsetHeight;
-      s.classList.toggle('focused', inView);
-      buttons[i].classList.toggle('active', inView);
-    });
-  };
-
-  buttons.forEach(btn => {
-    btn.onclick = () => {
-      document.getElementById(btn.dataset.target).scrollIntoView({behavior: 'smooth'});
-    };
-  });
+  // Change description every 3 seconds
+  setInterval(changeDescription, 3000);
 </script>
 
 </body>
+<div class="title-container" aria-label="EcoBox 3D model title and description">
+  <h2>Presenting: EcoBox 3D Experience</h2>
+  <div class="description" aria-live="polite" aria-atomic="true"></div>
+</div>
+
+
+<div class="model-container" aria-label="3D model of EcoBox greenhouse">
+  <iframe 
+    title="EcoBox Greenhouse"
+    frameborder="0" 
+    allowfullscreen 
+    allow="autoplay; fullscreen; xr-spatial-tracking"
+    xr-spatial-tracking 
+    execution-while-out-of-viewport 
+    execution-while-not-rendered 
+    web-share
+    src="https://sketchfab.com/models/a8b4e634a265492b83523b64dddf2604/embed"
+  ></iframe>
+</div>
+
 </html>
